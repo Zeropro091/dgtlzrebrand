@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DGTLZ // Instagram Carousel Generator</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+  <!-- html2canvas CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  
+  <style>
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background-color: #F5F5F5;
+      color: #1A1B25;
+    }
+    .serif-title {
+      font-family: 'EB Garamond', serif;
+    }
+    /* Fixed slide dimensions for high-res Instagram 4:5 capture */
+    .ig-slide-canvas {
+      width: 1080px;
+      height: 1350px;
+      position: absolute;
+      left: -9999px;
+      top: -9999px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 80px;
+      background-color: #0000F2;
+      color: #FFFFFF;
+      box-sizing: border-box;
+      border: 8px solid #0000F2;
+    }
+    /* Scaled down preview slide (4:5 ratio) */
+    .slide-preview-container {
+      aspect-ratio: 4/5;
+      width: 100%;
+      max-width: 400px;
+      background-color: #0000F2;
+      color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 30px;
+      border: 3px solid #0000F2;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 10px 10px 0px #000000;
+    }
+    .dither-pattern {
+      background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 0);
+      background-size: 8px 8px;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'electric-blue': '#0000F2',
+            'neon-green': '#39FF14',
+            'dark-charcoal': '#1A1B25',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="p-6 md:p-12">
+  <div class="max-w-7xl mx-auto">
+    <!-- Header -->
+    <header class="border-b-4 border-electric-blue pb-6 mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+      <div>
+        <span class="text-xs uppercase tracking-widest text-electric-blue font-bold">UTILITY // CREATIVE LAB</span>
+        <h1 class="text-3xl md:text-5xl font-black serif-title text-electric-blue uppercase mt-2">INSTAGRAM CAROUSEL GENERATOR</h1>
+      </div>
+      <a href="/" class="border-2 border-electric-blue px-6 py-2 text-electric-blue hover:bg-electric-blue hover:text-white transition-all uppercase text-sm font-bold">
+        [ RETURN TO APP ]
+      </a>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+      <!-- Left Panel: Slide Editor & Controllers -->
+      <div class="col-span-12 lg:col-span-7 space-y-6">
+        <div class="bg-white border-4 border-electric-blue p-6 shadow-[8px_8px_0px_#0000F2]">
+          <h2 class="text-lg font-bold border-b-2 border-electric-blue pb-2 mb-4 uppercase text-electric-blue">1. SELECT SLIDE & EDIT CONTENT</h2>
+          
+          <div class="flex flex-wrap gap-2 mb-6">
+            <button onclick="selectSlide(0)" id="btn-slide-0" class="btn-slide px-4 py-2 border-2 border-electric-blue bg-electric-blue text-white text-xs font-bold uppercase transition-all">Slide 1: Cover</button>
+            <button onclick="selectSlide(1)" id="btn-slide-1" class="btn-slide px-4 py-2 border-2 border-electric-blue text-electric-blue text-xs font-bold uppercase transition-all">Slide 2: Problem</button>
+            <button onclick="selectSlide(2)" id="btn-slide-2" class="btn-slide px-4 py-2 border-2 border-electric-blue text-electric-blue text-xs font-bold uppercase transition-all">Slide 3: UX Solve</button>
+            <button onclick="selectSlide(3)" id="btn-slide-3" class="btn-slide px-4 py-2 border-2 border-electric-blue text-electric-blue text-xs font-bold uppercase transition-all">Slide 4: Mkt Solve</button>
+            <button onclick="selectSlide(4)" id="btn-slide-4" class="btn-slide px-4 py-2 border-2 border-electric-blue text-electric-blue text-xs font-bold uppercase transition-all">Slide 5: Results</button>
+            <button onclick="selectSlide(5)" id="btn-slide-5" class="btn-slide px-4 py-2 border-2 border-electric-blue text-electric-blue text-xs font-bold uppercase transition-all">Slide 6: CTA</button>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-electric-blue mb-1 uppercase">Slide Category / Tagline</label>
+              <input type="text" id="edit-tag" oninput="updateContent()" class="w-full border-2 border-electric-blue p-2 focus:outline-none focus:bg-electric-blue/5 text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-electric-blue mb-1 uppercase">Main Headline</label>
+              <input type="text" id="edit-headline" oninput="updateContent()" class="w-full border-2 border-electric-blue p-2 focus:outline-none focus:bg-electric-blue/5 text-sm">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-electric-blue mb-1 uppercase">Description / Bullet Points (Line by line)</label>
+              <textarea id="edit-body" rows="6" oninput="updateContent()" class="w-full border-2 border-electric-blue p-2 focus:outline-none focus:bg-electric-blue/5 text-sm font-mono"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white border-4 border-electric-blue p-6 shadow-[8px_8px_0px_#000000] flex flex-col sm:flex-row gap-4">
+          <button onclick="downloadActiveSlide()" class="flex-1 bg-electric-blue text-white border-2 border-electric-blue hover:bg-white hover:text-electric-blue py-4 px-6 text-sm font-bold uppercase tracking-wider transition-all">
+            [ DOWNLOAD ACTIVE SLIDE PNG ]
+          </button>
+          <button onclick="downloadAllSlides()" class="flex-1 bg-dark-charcoal text-white border-2 border-dark-charcoal hover:bg-white hover:text-dark-charcoal py-4 px-6 text-sm font-bold uppercase tracking-wider transition-all">
+            [ DOWNLOAD ALL SLIDES ]
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Panel: Live Preview -->
+      <div class="col-span-12 lg:col-span-5 flex flex-col items-center justify-start">
+        <h2 class="text-xs font-bold text-electric-blue uppercase mb-4 tracking-widest">[ LIVE 4:5 INSTAGRAM PREVIEW ]</h2>
+        
+        <!-- Live Preview Component (4:5 aspect ratio) -->
+        <div id="preview-slide" class="slide-preview-container">
+          <div class="absolute inset-0 dither-pattern opacity-10 pointer-events-none"></div>
+          
+          <!-- Top bar -->
+          <div class="flex justify-between items-center border-b border-white/30 pb-2 z-10">
+            <span id="preview-tag-ui" class="text-[10px] tracking-widest font-bold text-neon-green">DGTLZ // RESEARCH</span>
+            <span id="preview-num-ui" class="text-[10px] font-bold text-white/70">01 / 06</span>
+          </div>
+
+          <!-- Middle Content -->
+          <div class="my-auto space-y-4 z-10">
+            <h2 id="preview-headline-ui" class="serif-title text-2xl sm:text-3xl font-bold leading-tight uppercase">
+              OPTIMALISASI EKOSISTEM DIGITAL OMNICHANNEL
+            </h2>
+            <div id="preview-body-ui" class="text-xs space-y-2 opacity-90 leading-relaxed font-mono">
+              <!-- Rendered lines -->
+            </div>
+          </div>
+
+          <!-- Bottom bar -->
+          <div class="flex justify-between items-end border-t border-white/30 pt-2 z-10">
+            <span class="text-[9px] text-white/50">© DGTLZ DIGITAL SOLUTIONS</span>
+            <span class="text-[9px] font-bold text-neon-green uppercase tracking-wider animate-pulse">SWIPE &gt;&gt;&gt;</span>
+          </div>
+        </div>
+        
+        <p class="text-xs text-electric-blue/70 mt-6 text-center max-w-sm">
+          *Downloaded slide images are generated at high resolution (1080px x 1350px) perfect for Instagram upload.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Offscreen High-Res Renderers (used by html2canvas) -->
+  <div id="render-sandbox">
+    <!-- Slide 1 -->
+    <div id="canvas-slide-0" class="ig-slide-canvas">
+      <div class="absolute inset-0 dither-pattern opacity-10 pointer-events-none"></div>
+      <div class="flex justify-between items-center border-b-2 border-white/30 pb-4 z-10">
+        <span class="text-base tracking-widest font-bold text-neon-green uppercase slide-tag">DGTLZ // RESEARCH</span>
+        <span class="text-base font-bold text-white/70">01 / 06</span>
+      </div>
+      <div class="my-auto space-y-8 z-10">
+        <h2 class="serif-title text-6xl font-black leading-tight uppercase slide-headline">
+          OPTIMALISASI EKOSISTEM DIGITAL OMNICHANNEL
+        </h2>
+        <div class="text-lg space-y-4 leading-relaxed font-mono slide-body"></div>
+      </div>
+      <div class="flex justify-between items-end border-t-2 border-white/30 pt-4 z-10">
+        <span class="text-xs text-white/50">© DGTLZ DIGITAL SOLUTIONS</span>
+        <span class="text-xs font-bold text-neon-green uppercase tracking-wider">SWIPE &gt;&gt;&gt;</span>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div id="canvas-slide-1" class="ig-slide-canvas">
+      <div class="absolute inset-0 dither-pattern opacity-10 pointer-events-none"></div>
+      <div class="flex justify-between items-center border-b-2 border-white/30 pb-4 z-10">
+        <span class="text-base tracking-widest font-bold text-neon-green uppercase slide-tag">01 // THE PROBLEM</span>
+        <span class="text-base font-bold text-white/70">02 / 06</span>
+      </div>
+      <div class="my-auto space-y-8 z-10">
+        <h2 class="serif-title text-6xl font-black leading-tight uppercase slide-headline">
+          LEAKY BUCKET SYNDROME
+        </h2>
+        <div class="text-lg space-y-4 leading-relaxed font-mono slide-body"></div>
+      </div>
+      <div class="flex justify-between items-end border-t-2 border-white/30 pt-4 z-10">
+        <span class="text-xs text-white/50">© DGTLZ DIGITAL SOLUTIONS</span>
+        <span class="text-xs font-bold text-neon-green uppercase tracking-wider">SWIPE &gt;&gt;&gt;</span>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div id="canvas-slide-2" class="ig-slide-canvas">
+      <div class="absolute inset-0 dither-pattern opacity-10 pointer-events-none"></div>
+      <div class="flex justify-between items-center border-b-2 border-white/30 pb-4 z-10">
+        <span class="text-base tracking-widest font-bold text-neon-green uppercase slide-tag">02 // UX RE-ARCHITECTURE</span>
+        <span class="text-base font-bold text-white/70">03 / 06</span>
+      </div>
+      <div class="my-auto space-y-8 z-10">
+        <h2 class="serif-title text-6xl font-black leading-tight uppercase slide-headline">
+          REDUCING THE FRICTION
+        </h2>
+        <div class="text-lg space-y-4 leading-relaxed font-mono slide-body"></div>
+      </div>
+      <div class="flex justify-between items-end border-t-2 border-white/30 pt-4 z-10">
+        <span class="text-xs text-white/50">© DGTLZ DIGITAL SOLUTIONS</span>
+        <span class="text-xs font-bold text-neon-green uppercase tracking-wider">SWIPE &gt;&gt;&gt;</span>
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div id="canvas-slide-3" class="ig-slide-canvas">
+      <div class="absolute inset-0 dither-pattern opacity-10 pointer-events-none"></div>
+      <div class="flex justify-between items-center border-b-2 border-white/30 pb-4 z-10">
+        <span class="text-base tracking-widest font-bold text-neon-green uppercase slide-tag">03 // PERFORMANCE MARKETING</span>
+        <span class="text-base font-bold text-white/70">04 / 06</span>
+      </div>
+      <div class="my-auto space-y-8 z-10">
+        <h2 class="serif-title text-6xl font-black leading-tight uppercase slide-headline">
+          AARRR FUNNEL ALIGNMENT
+        </h2>
+        <div class="text-lg space-y-4 leading-relaxed font-mono slide-body"></div>
+      </div>
+      <div class="flex justify-between items-end border-t-2 border-white/30 pt-4 z-10">
+        <span class="text-xs text-white/50">© DGTLZ DIGITAL SOLUTIONS</span>
+        <span class="text-xs font-bold text-neon-green uppercase tracking-wider">SWIPE &gt;&gt;&gt;</span>
+      </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div id="canvas-slide-4" class="ig-slide-canvas">
+      <div class="absolute inset-0 dither-pattern opacity-10 pointer-events-none"></div>
+      <div class="flex justify-between items-center border-b-2 border-white/30 pb-4 z-10">
+        <span class="text-base tracking-widest font-bold text-neon-green uppercase slide-tag">04 // RESULTS</span>
+        <span class="text-base font-bold text-white/70">05 / 06</span>
+      </div>
+      <div class="my-auto space-y-8 z-10">
+        <h2 class="serif-title text-6xl font-black leading-tight uppercase slide-headline">
+          THE METRICS SHIFT
+        </h2>
+        <div class="text-lg space-y-4 leading-relaxed font-mono slide-body"></div>
+      </div>
+      <div class="flex justify-between items-end border-t-2 border-white/30 pt-4 z-10">
+        <span class="text-xs text-white/50">© DGTLZ DIGITAL SOLUTIONS</span>
+        <span class="text-xs font-bold text-neon-green uppercase tracking-wider">SWIPE &gt;&gt;&gt;</span>
+      </div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div id="canvas-slide-5" class="ig-slide-canvas">
+      <div class="absolute inset-0 dither-pattern opacity-10 pointer-events-none"></div>
+      <div class="flex justify-between items-center border-b-2 border-white/30 pb-4 z-10">
+        <span class="text-base tracking-widest font-bold text-neon-green uppercase slide-tag">05 // CONCLUSION</span>
+        <span class="text-base font-bold text-white/70">06 / 06</span>
+      </div>
+      <div class="my-auto space-y-8 z-10">
+        <h2 class="serif-title text-6xl font-black leading-tight uppercase slide-headline">
+          ABILITY &gt; MOTIVATION
+        </h2>
+        <div class="text-lg space-y-4 leading-relaxed font-mono slide-body"></div>
+      </div>
+      <div class="flex justify-between items-end border-t-2 border-white/30 pt-4 z-10">
+        <span class="text-xs text-white/50">© DGTLZ DIGITAL SOLUTIONS</span>
+        <span class="text-xs font-bold text-neon-green uppercase tracking-wider">CONNECT</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initial Slide Contents
+    const slidesData = [
+      {
+        tag: "DGTLZ // RESEARCH SERIES",
+        headline: "OPTIMALISASI EKOSISTEM DIGITAL OMNICHANNEL",
+        body: "Bagaimana integrasi Design Thinking, Fogg Behavior Model, dan Funnel AARRR menghasilkan CRO masif dan efisiensi biaya iklan.\n\n[ STUDI EMPIRIS Enterprise CRO ]"
+      },
+      {
+        tag: "01 // THE PROBLEM",
+        headline: "LEAKY BUCKET SYNDROME",
+        body: "• Bakar uang di paid ads tapi konversi rendah?\n• Rata-rata tingkat abandon cart mencapai 70%.\n• Formulir checkout kuno berisi 12 kolom masukan.\n• Tombol beli tidak ergonomis (di luar thumb zone)."
+      },
+      {
+        tag: "02 // UX RE-ARCHITECTURE",
+        headline: "REDUCING COGNITIVE FRICTION",
+        body: "• Transisi dari form rumit ke Single-Page Guest Checkout.\n• Memangkas form dari 12 kolom menjadi 4 kolom esensial.\n• Integrasi Address Autocomplete API untuk kenyamanan.\n• Hasil: Ability meningkat masif."
+      },
+      {
+        tag: "03 // PERFORMANCE MARKETING",
+        headline: "AARRR FUNNEL ALIGNMENT",
+        body: "Iklan berbayar disegmentasi ke 3 layer:\n\n• TOFU: Target Broad (objektif Landing Page View)\n• MOFU: Target Engaged Visitors (objektif Add To Cart)\n• BOFU: Target Abandoners (objektif Purchase)"
+      },
+      {
+        tag: "04 // EMPIRICAL RESULTS",
+        headline: "THE METRICS SHIFT",
+        body: "Hasil eksperimen 90 hari dengan N = 245.000 user:\n\n✔ CONVERSION RATE: 1.2% -> 3.4% (+183%)\n✔ CART ABANDONMENT: 78% -> 42% (-46%)\n✔ CAC REDUCTION: Rp 150k -> Rp 85k (-43%)\n✔ ROAS BOOST: 1.8x -> 4.2x (+133%)"
+      },
+      {
+        tag: "05 // CONCLUSION & CTA",
+        headline: "ABILITY > MOTIVATION",
+        body: "Menurunkan tingkat kesulitan transaksi (Ability) terbukti memberikan dampak permanen dan hemat margin dibandingkan sekadar membagi kupon diskon.\n\nMari optimasi ekosistem Anda. Hubungi kami."
+      }
+    ];
+
+    let activeSlideIndex = 0;
+
+    // Load initial slide into editors
+    function selectSlide(index) {
+      activeSlideIndex = index;
+      
+      // Update Active Button styling
+      document.querySelectorAll('.btn-slide').forEach((btn, i) => {
+        if (i === index) {
+          btn.classList.add('bg-electric-blue', 'text-white');
+          btn.classList.remove('text-electric-blue');
+        } else {
+          btn.classList.remove('bg-electric-blue', 'text-white');
+          btn.classList.add('text-electric-blue');
+        }
+      });
+
+      // Update Form Inputs
+      document.getElementById('edit-tag').value = slidesData[index].tag;
+      document.getElementById('edit-headline').value = slidesData[index].headline;
+      document.getElementById('edit-body').value = slidesData[index].body;
+
+      updateUI();
+    }
+
+    // Refresh the UI from data
+    function updateUI() {
+      // Update Preview
+      document.getElementById('preview-tag-ui').innerText = slidesData[activeSlideIndex].tag;
+      document.getElementById('preview-num-ui').innerText = `${String(activeSlideIndex + 1).padStart(2, '0')} / 06`;
+      document.getElementById('preview-headline-ui').innerText = slidesData[activeSlideIndex].headline;
+      
+      const bodyUI = document.getElementById('preview-body-ui');
+      bodyUI.innerHTML = '';
+      slidesData[activeSlideIndex].body.split('\n').forEach(line => {
+        const p = document.createElement('p');
+        p.innerText = line;
+        bodyUI.appendChild(p);
+      });
+
+      // Update Offscreen Canvas Renderers
+      slidesData.forEach((slide, index) => {
+        const root = document.getElementById(`canvas-slide-${index}`);
+        root.querySelector('.slide-tag').innerText = slide.tag;
+        root.querySelector('.slide-headline').innerText = slide.headline;
+        
+        const canvasBody = root.querySelector('.slide-body');
+        canvasBody.innerHTML = '';
+        slide.body.split('\n').forEach(line => {
+          const p = document.createElement('div');
+          p.innerText = line;
+          p.className = 'mt-2';
+          canvasBody.appendChild(p);
+        });
+      });
+    }
+
+    // Handle form input
+    function updateContent() {
+      slidesData[activeSlideIndex].tag = document.getElementById('edit-tag').value;
+      slidesData[activeSlideIndex].headline = document.getElementById('edit-headline').value;
+      slidesData[activeSlideIndex].body = document.getElementById('edit-body').value;
+      updateUI();
+    }
+
+    // Trigger download for a specific slide canvas
+    function downloadSlideImage(index) {
+      const slideElement = document.getElementById(`canvas-slide-${index}`);
+      
+      // Temporary override classes to force visible size during capture
+      slideElement.style.position = 'relative';
+      slideElement.style.left = '0';
+      slideElement.style.top = '0';
+      
+      html2canvas(slideElement, {
+        width: 1080,
+        height: 1350,
+        scale: 1, // Keep clean 1080x1350 resolution
+        useCORS: true
+      }).then(canvas => {
+        // Reset positions
+        slideElement.style.position = 'absolute';
+        slideElement.style.left = '-9999px';
+        slideElement.style.top = '-9999px';
+        
+        // Trigger download link
+        const link = document.createElement('a');
+        link.download = `dgtlz-slide-${index + 1}.png`;
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      });
+    }
+
+    function downloadActiveSlide() {
+      downloadSlideImage(activeSlideIndex);
+    }
+
+    // Async download all sequentially with small delay to avoid browser lockups
+    async function downloadAllSlides() {
+      for(let i = 0; i < 6; i++) {
+        downloadSlideImage(i);
+        await new Promise(resolve => setTimeout(resolve, 800)); // 800ms delay between slide renders
+      }
+    }
+
+    // Init
+    window.onload = () => {
+      selectSlide(0);
+    };
+  </script>
+</body>
+</html>

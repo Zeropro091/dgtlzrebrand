@@ -1,0 +1,16 @@
+              {d.approval ? d.approval : d.done ? 'DONE' : 'PENDING'}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+    </div>
+  );
+}
+
