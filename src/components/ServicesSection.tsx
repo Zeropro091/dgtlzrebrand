@@ -1,9 +1,19 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { services } from '../data';
+import { Reveal } from './Reveal';
+import { useSound } from '../lib/useSound';
 
 export function ServicesSection() {
   const [activeService, setActiveService] = useState<string | null>(null);
+  const { play } = useSound();
+
+  // Hovering a row both highlights it and fires a tick. Sound is throttled
+  // in the engine, so sweeping across the list doesn't machine-gun.
+  const hoverService = (id: string) => {
+    setActiveService(id);
+    play('hover');
+  };
 
   // Group services for asymmetric brutalist layout
   const coreServices = services.slice(0, 2); // s1, s2
@@ -16,7 +26,7 @@ export function ServicesSection() {
       <div className="bg-electric-blue text-white p-margin border-b border-electric-blue flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <span className="font-label-caps opacity-75 block text-[10px] tracking-widest">
-            // DGTLZ SYSTEM CAPABILITIES ARCHITECTURE
+            KAPABILITAS SISTEM DGTLZ
           </span>
           <h2 className="font-display-lg leading-none uppercase mt-1">
             SERVICE OPERATIONS<span className="text-[#39FF14]">.</span>
@@ -35,7 +45,7 @@ export function ServicesSection() {
         <div className="col-span-12 md:col-span-4 p-margin border-b md:border-b-0 md:border-r border-electric-blue bg-off-white flex flex-col justify-between">
           <div>
             <span className="font-label-caps text-xs text-electric-blue font-bold block mb-4">
-              [ PROTOCOL INDEX ]
+              LAYANAN KAMI
             </span>
             <p className="font-body-sm opacity-80 mb-6 leading-relaxed">
               Kami tidak menawarkan paket generik. Setiap kapabilitas dirancang sebagai infrastruktur taktis untuk memperkuat posisi pasar dan otonomi operasional bisnis Anda.
@@ -46,7 +56,7 @@ export function ServicesSection() {
               {services.map((s, idx) => (
                 <div
                   key={s.id}
-                  onMouseEnter={() => setActiveService(s.id)}
+                  onMouseEnter={() => hoverService(s.id)}
                   onMouseLeave={() => setActiveService(null)}
                   className={`flex items-center justify-between font-mono text-xs p-2 transition-colors cursor-pointer ${
                     activeService === s.id
@@ -58,7 +68,7 @@ export function ServicesSection() {
                     0{idx + 1}. {s.title}
                   </span>
                   <span className="text-[10px] opacity-60">
-                    {s.id === 's5' || s.id === 's6' ? 'FLAGSHIP' : 'CORE'}
+                    {s.id === 's5' || s.id === 's6' ? 'UNGGULAN' : 'REGULER'}
                   </span>
                 </div>
               ))}
@@ -66,7 +76,7 @@ export function ServicesSection() {
           </div>
 
           <div className="mt-8 pt-4 border-t border-electric-blue/20">
-            <div className="font-label-caps text-[10px] opacity-60 mb-1">DEPLOYMENT SPEC</div>
+            <div className="font-label-caps text-[10px] opacity-60 mb-1">DETAIL DEPLOY</div>
             <div className="font-mono text-xs font-semibold text-electric-blue">
               ZERO SLOP • DIRECT INTEGRATION • HIGH RESILIENCE
             </div>
@@ -74,7 +84,7 @@ export function ServicesSection() {
         </div>
 
         {/* Right Asymmetric Grid */}
-        <div className="col-span-12 md:col-span-8">
+        <Reveal className="col-span-12 md:col-span-8" from="right" sound>
           {/* TIER 1: CORE ARCHITECTURE (2 Columns) */}
           <div className="grid grid-cols-1 sm:grid-cols-2 border-b border-electric-blue">
             {coreServices.map((service, index) => {
@@ -82,7 +92,7 @@ export function ServicesSection() {
               return (
                 <div
                   key={service.id}
-                  onMouseEnter={() => setActiveService(service.id)}
+                  onMouseEnter={() => hoverService(service.id)}
                   onMouseLeave={() => setActiveService(null)}
                   className={`p-margin ${
                     index === 0 ? 'sm:border-r border-electric-blue' : ''
@@ -93,10 +103,10 @@ export function ServicesSection() {
                   <div>
                     <div className="flex items-center justify-between mb-4">
                       <span className="font-label-caps text-[10px] opacity-60">
-                        OP_0{index + 1} // TIER_1
+                        0{index + 1} · TIER 1
                       </span>
                       <span className="font-mono text-[9px] px-1.5 py-0.5 border border-current opacity-40">
-                        DESIGN SCIENCE
+                        DESAIN & STRATEGI
                       </span>
                     </div>
                     <h3 className="font-headline-md mb-3">{service.title}</h3>
@@ -105,7 +115,7 @@ export function ServicesSection() {
                     </p>
                   </div>
                   <div className="mt-6 pt-3 border-t border-current/20 flex items-center justify-between font-mono text-[11px] opacity-75">
-                    <span>STATUS: ACTIVE</span>
+                    <span>STATUS: TERSEDIA</span>
                     <span>READY &rarr;</span>
                   </div>
                 </div>
@@ -122,7 +132,7 @@ export function ServicesSection() {
               return (
                 <div
                   key={service.id}
-                  onMouseEnter={() => setActiveService(service.id)}
+                  onMouseEnter={() => hoverService(service.id)}
                   onMouseLeave={() => setActiveService(null)}
                   className={`${colSpan} p-margin ${borderRight} transition-colors duration-300 flex flex-col justify-between ${
                     isHovered ? 'bg-electric-blue text-white' : 'bg-off-white text-black'
@@ -131,7 +141,7 @@ export function ServicesSection() {
                   <div>
                     <div className="flex items-center justify-between mb-4">
                       <span className="font-label-caps text-[10px] opacity-60">
-                        OP_0{index + 3} // TIER_2
+                        0{index + 3} · TIER 2
                       </span>
                       <span className="font-mono text-[9px] px-1.5 py-0.5 border border-current opacity-40">
                         INFRASTRUCTURE
@@ -143,7 +153,7 @@ export function ServicesSection() {
                     </p>
                   </div>
                   <div className="mt-6 pt-3 border-t border-current/20 flex items-center justify-between font-mono text-[11px] opacity-75">
-                    <span>SPEC: OPERATIONAL</span>
+                    <span>SIAP DIPAKAI</span>
                     <span>DEPLOY &rarr;</span>
                   </div>
                 </div>
@@ -157,11 +167,11 @@ export function ServicesSection() {
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 bg-[#39FF14] rounded-full animate-pulse"></span>
                 <span className="font-label-caps text-xs text-[#39FF14] tracking-widest font-bold">
-                  FLAGSHIP PROPRIETARY ENGINES
+                  ENGINE UNGGULAN KAMI
                 </span>
               </div>
               <span className="font-mono text-[10px] text-neutral-400 border border-neutral-800 px-2 py-0.5">
-                TIER_3 // HIGH VELOCITY
+                TIER 3 · EKSEKUSI CEPAT
               </span>
             </div>
 
@@ -173,7 +183,7 @@ export function ServicesSection() {
                 return (
                   <div
                     key={service.id}
-                    onMouseEnter={() => setActiveService(service.id)}
+                    onMouseEnter={() => hoverService(service.id)}
                     onMouseLeave={() => setActiveService(null)}
                     className="border border-neutral-800 bg-neutral-900/80 p-5 flex flex-col justify-between hover:border-[#39FF14] transition-all duration-300 relative group"
                   >
@@ -189,7 +199,7 @@ export function ServicesSection() {
                         )}
                         {isRoute && (
                           <span className="font-mono text-[9px] bg-electric-blue/40 text-white px-2 py-0.5 border border-electric-blue">
-                            AI ROUTER GATEWAY
+                            ROUTER AI
                           </span>
                         )}
                       </div>
@@ -228,7 +238,7 @@ export function ServicesSection() {
                             to="/route"
                             className="font-label-caps text-xs text-[#39FF14] underline hover:text-white transition-colors cursor-pointer flex items-center gap-1 font-bold"
                           >
-                            EXPLORE GATEWAY &rarr;
+                            LIHAT GATEWAY &rarr;
                           </Link>
                         </div>
                       )}
@@ -238,7 +248,7 @@ export function ServicesSection() {
               })}
             </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

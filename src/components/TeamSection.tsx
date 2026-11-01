@@ -1,6 +1,9 @@
-import { teamMembers } from '../data';
+﻿import { teamMembers } from '../data';
+import { useSound } from '../lib/useSound';
 
 export function TeamSection() {
+  const { play } = useSound();
+
   return (
     <section id="team" className="border-b border-electric-blue">
       <div className="p-margin border-b border-electric-blue bg-electric-blue text-white">
@@ -32,7 +35,7 @@ export function TeamSection() {
             .toUpperCase();
 
           return (
-            <div key={member.id} className="border-b md:border-b-0 md:border-r border-electric-blue last:border-b-0 group relative flex flex-col">
+            <div key={member.id} onMouseEnter={() => play('hover')} className="border-b md:border-b-0 md:border-r border-electric-blue last:border-b-0 group relative flex flex-col cursor-pointer">
               <div className={`${containerClass} aspect-square overflow-hidden relative`}>
                 {member.imageUrl ? (
                   <img
@@ -50,7 +53,7 @@ export function TeamSection() {
                 <div className={`absolute inset-0 ${patternClass} opacity-20 pointer-events-none`}></div>
               </div>
               <div className={`p-4 border-t border-electric-blue bg-off-white ${infoHoverClass} transition-colors duration-300 flex-grow`}>
-                <p className="font-label-caps text-[9px] opacity-60 mb-1">0{i + 1} // {member.department.replace('_', ' ')} // {member.role}</p>
+                <p className="font-label-caps text-[9px] opacity-60 mb-1">0{i + 1} · {member.department.replace('_', ' ')} · {member.role}</p>
                 <h3 className="font-label-caps font-bold">{member.name}</h3>
               </div>
             </div>

@@ -34,13 +34,13 @@ export function ModulePage() {
       <div className="bg-off-white min-h-[60vh] flex items-center justify-center">
         <div className="border border-dashed border-electric-blue p-16 text-center">
           <div className="font-label-caps text-lg font-bold mb-4 text-electric-blue">
-            [ MODULE NOT FOUND IN REGISTRY ]
+            HALAMAN TIDAK DITEMUKAN
           </div>
           <Link
             to="/systems"
             className="font-label-caps border border-electric-blue text-electric-blue px-6 py-2 hover:bg-electric-blue hover:text-white transition-colors"
           >
-            RETURN TO SYSTEM TAXONOMY
+            KEMBALI KE DAFTAR SISTEM
           </Link>
         </div>
       </div>
@@ -105,7 +105,7 @@ export function ModulePage() {
         <div className="relative z-10 p-margin flex flex-col justify-end min-h-[440px] md:min-h-[520px]">
           <div className="flex justify-between items-start mb-4">
             <span className="font-label-caps text-white/70 tracking-wider">
-              DGT.LZ ARSENAL // MODULE {mod.id}
+              DGT.LZ · SISTEM {mod.id}
             </span>
             <span
               className="font-mono text-3xl md:text-5xl font-extrabold mix-blend-difference"
@@ -118,7 +118,7 @@ export function ModulePage() {
             {briefing?.headline ?? mod.code}
           </h1>
           <p className="font-label-caps text-white/80 mt-3 uppercase">
-            {mod.code} — {mod.name}
+            {mod.code} · {mod.name}
           </p>
         </div>
       </header>
@@ -131,7 +131,7 @@ export function ModulePage() {
             style={{ borderLeft: `6px solid ${accent}` }}
           >
             <span className="font-label-caps block mb-4 text-electric-blue font-bold">
-              MODULE BRIEFING
+              RINGKASAN
             </span>
             <p className="font-body-lg leading-relaxed text-on-surface text-justify">
               {briefing.briefing}
@@ -143,13 +143,13 @@ export function ModulePage() {
           <div className="md:col-span-4 bg-off-white p-8 md:p-10 flex flex-col justify-between">
             <div>
               <span className="font-label-caps block mb-4 text-electric-blue font-bold">
-                TELEMETRY
+                INFO
               </span>
               <div className="font-mono text-5xl md:text-6xl font-extrabold" style={{ color: accent }}>
                 {mod.systems.length}
               </div>
               <span className="font-label-caps text-electric-blue/70 block mt-1">
-                SYSTEM SPECIFICATIONS LOADED
+                SISTEM TERDAFTAR
               </span>
             </div>
             <Link
@@ -199,14 +199,14 @@ export function ModulePage() {
               className="p-margin flex flex-col border-b md:border-b-0 md:border-r border-electric-blue group hover:bg-electric-blue hover:text-white transition-colors"
             >
               <span className="font-label-caps text-xs opacity-60 mb-2">
-                ← PREVIOUS MODULE // {prevMod.id}
+                ← SEBELUMNYA · {prevMod.id}
               </span>
               <span className="font-headline-md uppercase">{prevMod.code}</span>
             </Link>
           ) : (
             <div className="p-margin flex flex-col border-b md:border-b-0 md:border-r border-electric-blue opacity-40">
-              <span className="font-label-caps text-xs opacity-60 mb-2">START OF REGISTRY</span>
-              <span className="font-headline-md uppercase">MODULE 01</span>
+              <span className="font-label-caps text-xs opacity-60 mb-2">AWAL DAFTAR</span>
+              <span className="font-headline-md uppercase">SISTEM 01</span>
             </div>
           )}
           {nextMod ? (
@@ -215,14 +215,14 @@ export function ModulePage() {
               className="p-margin flex flex-col items-end text-right group hover:bg-electric-blue hover:text-white transition-colors"
             >
               <span className="font-label-caps text-xs opacity-60 mb-2">
-                NEXT MODULE // {nextMod.id} →
+                BERIKUTNYA · {nextMod.id} →
               </span>
               <span className="font-headline-md uppercase">{nextMod.code}</span>
             </Link>
           ) : (
             <div className="p-margin flex flex-col items-end text-right opacity-40">
-              <span className="font-label-caps text-xs opacity-60 mb-2">END OF REGISTRY</span>
-              <span className="font-headline-md uppercase">MODULE 10</span>
+              <span className="font-label-caps text-xs opacity-60 mb-2">AKHIR DAFTAR</span>
+              <span className="font-headline-md uppercase">SISTEM 10</span>
             </div>
           )}
         </div>

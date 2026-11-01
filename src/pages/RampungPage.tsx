@@ -242,7 +242,7 @@ export function RampungPage() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <span className="bg-neutral-900 text-[#BDEDDC] text-xs font-black px-2.5 py-1">
-                APP REPO // OPEN ARTIFACT
+                REPO APLIKASI
               </span>
               <span className="text-xs font-bold text-blue-200">KOTLIN • JETPACK COMPOSE • ROOM</span>
             </div>
@@ -284,7 +284,7 @@ export function RampungPage() {
             <span className="font-bold text-neutral-900">Studio Agency (5-15 Pax)</span>
           </div>
           <div className="p-4">
-            <span className="text-[10px] text-neutral-400 font-bold block mb-1">CORE ARCHITECTURE</span>
+            <span className="text-[10px] text-neutral-400 font-bold block mb-1">ARSITEKTUR</span>
             <span className="font-bold text-neutral-900">Task-First & Project Sync</span>
           </div>
           <div className="p-4">
@@ -321,7 +321,7 @@ export function RampungPage() {
                 <div className="bg-[#FCF9F3] px-5 py-3 border-b border-neutral-200 flex items-center justify-between">
                   <div>
                     <span className="text-[9px] font-bold text-rampung uppercase tracking-widest block">
-                      AETHERS STUDIO // RAMPUNG
+                      AETHERS STUDIO · RAMPUNG
                     </span>
                     <h2 className="text-base font-black tracking-tight text-[#080C12]">
                       {deviceTab === 'TODAY' && 'Hari Ini'}
@@ -512,7 +512,7 @@ export function RampungPage() {
                           <span>{selectedTask.isCompleted ? 'SUDAH SELESAI' : 'TANDAI SELESAI'}</span>
                         </button>
                         <p className="text-[9px] text-neutral-400 text-center">
-                          Satu aksi utama — progres proyek otomatis ter-update.
+                          Satu aksi utama: progres proyek otomatis ter-update.
                         </p>
                       </div>
                     </div>
@@ -640,7 +640,7 @@ export function RampungPage() {
             <div className="border-2 border-neutral-900 bg-white p-6 shadow-[4px_4px_0_0_rgba(0,0,0,0.9)]">
               <div className="flex items-center gap-2 mb-2">
                 <span className="bg-electric-blue text-white px-2 py-0.5 text-xs font-black">
-                  PRODUCT BLUEPRINT
+                  RANCANGAN PRODUK
                 </span>
                 <span className="text-xs text-neutral-400 font-bold">ALUR & VISIBILITAS</span>
               </div>

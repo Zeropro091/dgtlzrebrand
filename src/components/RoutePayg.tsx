@@ -103,13 +103,13 @@ export function RoutePayg() {
           <div>
             <div className="flex items-center gap-2 text-electric-blue font-mono text-xs uppercase tracking-widest font-bold">
               <Zap className="w-4 h-4" />
-              // PAY-AS-YOU-GO // QUICK START
+              MULAI CEPAT
             </div>
             <h2 className="font-serif font-display-md uppercase tracking-tight text-neutral-900 mt-1">
               ISI SALDO, PAKAI MODEL APAPUN
             </h2>
             <p className="font-mono text-xs text-neutral-600 mt-2 max-w-2xl">
-              Tanpa langganan. Tanpa minimum. Bayar per token — harga transparan per 1M token di bawah. Saldo tidak hangus, aktif kapan pun kamu butuh.
+              Tanpa langganan. Tanpa minimum. Bayar per token, harga transparan per 1M token di bawah. Saldo tidak hangus, aktif kapan pun kamu butuh.
             </p>
           </div>
           <div className="font-mono text-xs text-neutral-600 lg:text-right shrink-0">
@@ -136,7 +136,7 @@ export function RoutePayg() {
               <div>
                 <h3 className="font-serif font-display-sm uppercase mb-3">Chat Dulu, Baru Bayar Token</h3>
                 <p className="text-xs text-neutral-600 leading-relaxed mb-4">
-                  Setiap akun Route langsung punya chat playground: test model mana pun dari katalog — bandingkan jawaban, kecepatan, dan biaya real-time sebelum dipakai di produksi.
+                  Setiap akun Route langsung punya chat playground: test model mana pun dari katalog, bandingkan jawaban, kecepatan, dan biaya real-time sebelum dipakai di produksi.
                 </p>
                 <ul className="space-y-2">
                   {['Semua model katalog bisa dicoba', 'Biaya real-time per pesan (per token)', 'Riwayat chat tersimpan per akun', 'Langsung loncat ke API kalau sudah cocok'].map((x) => (
@@ -145,12 +145,12 @@ export function RoutePayg() {
                 </ul>
               </div>
               <div className="bg-neutral-900 text-neutral-200 p-5 text-[11px] leading-relaxed">
-                <div className="text-electric-blue mb-2">// 1 juta token itu kira-kira:</div>
+                <div className="text-electric-blue mb-2">1 juta token itu kira-kira:</div>
                 <div>≈ 750 halaman dokumen dibaca &amp; diringkas</div>
                 <div>≈ 60–80 percakapan support panjang</div>
                 <div>≈ 3.500 baris kode di-review</div>
                 <div className="mt-3 pt-3 border-t border-neutral-700">
-                  Dari <span className="text-electric-blue font-bold">$0.02</span> (gpt-5-nano) sampai <span className="text-electric-blue font-bold">$25.00</span> (anthropic 1M) per 1M output — kamu pilih titik harga/kualitasnya.
+                  Dari <span className="text-electric-blue font-bold">$0.02</span> (gpt-5-nano) sampai <span className="text-electric-blue font-bold">$25.00</span> (anthropic 1M) per 1M output, kamu pilih titik harga/kualitasnya.
                 </div>
               </div>
             </div>
@@ -179,7 +179,7 @@ export function RoutePayg() {
                 <Zap className="w-5 h-5 text-electric-blue mb-3" />
                 <h3 className="font-serif font-display-sm uppercase mb-2">Top-up Fleksibel</h3>
                 <p className="text-xs text-neutral-600 leading-relaxed">
-                  Isi saldo via DGTLZ PayGate (QRIS) atau transfer. Saldo tidak hangus — pakai pelan-pelan atau habiskan sekaligus.
+                  Isi saldo via DGTLZ PayGate (QRIS) atau transfer. Saldo tidak hangus, pakai pelan-pelan atau habiskan sekaligus.
                 </p>
               </div>
             </div>
@@ -212,7 +212,7 @@ export function RoutePayg() {
                 <ol className="space-y-3">
                   {[
                     'Daftar akun Route & verify email',
-                    'Top-up saldo via QRIS (PayGate) — langsung masuk',
+                    'Top-up saldo via QRIS (PayGate), langsung masuk',
                     'Buat API key di dashboard',
                     'Set BASE_URL + key → panggil model mana pun',
                   ].map((s, i) => (
@@ -281,7 +281,7 @@ export function RoutePayg() {
         {/* CTA band */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border border-electric-blue p-5">
           <div className="text-xs text-neutral-700">
-            <span className="font-bold text-neutral-900">MAU COBA DULU?</span> Chat playground tersedia saat daftar — bayar cuma token yang kepakai.
+            <span className="font-bold text-neutral-900">MAU COBA DULU?</span> Chat playground tersedia saat daftar, bayar cuma token yang kepakai.
           </div>
           <a href={WA_LINK} target="_blank" rel="noopener noreferrer"
             className="shrink-0 inline-flex items-center gap-2 bg-electric-blue text-white px-5 py-2.5 text-xs uppercase tracking-widest hover:opacity-90 transition-opacity">

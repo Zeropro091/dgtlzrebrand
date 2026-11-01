@@ -1,9 +1,31 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'motion/react';
 import { workItems, WorkItem } from '../data';
+import { useSound } from '../lib/useSound';
+import { Pressable } from './Pressable';
+import { Tilt3D } from './Magnetic';
 
 export function WorkSection() {
   const [selectedWork, setSelectedWork] = useState<WorkItem | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
+  const { play } = useSound();
+
+  const openCase = (item: WorkItem) => {
+    setSelectedWork(item);
+    play('open');
+  };
+
+  const closeCase = () => {
+    setSelectedWork(null);
+    play('close');
+  };
+
+  const stepImage = (dir: 1 | -1) => {
+    if (!selectedWork?.images) return;
+    const len = selectedWork.images.length;
+    setActiveImageIndex((prev) => (prev + dir + len) % len);
+    play('tick');
+  };
 
   useEffect(() => {
     if (selectedWork) {
@@ -15,21 +37,22 @@ export function WorkSection() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setSelectedWork(null);
+        play('close');
       }
     };
-    
+
     if (selectedWork) {
       document.body.style.overflow = 'hidden';
       window.addEventListener('keydown', handleKeyDown);
     } else {
       document.body.style.overflow = '';
     }
-    
+
     return () => {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', handleKeyDown);
     };
-  }, [selectedWork]);
+  }, [selectedWork, play]);
 
   return (
     <>
@@ -37,43 +60,61 @@ export function WorkSection() {
         <div className="p-margin border-b border-electric-blue bg-electric-blue text-white">
           <h2 className="font-display-lg leading-none uppercase">SELECTED WORK</h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-12">
+        <div className="grid grid-cols-1 md:grid-cols-12 items-start">
           {workItems.map((item, index) => (
-            <div 
-              key={item.id} 
-              onClick={() => setSelectedWork(item)}
-              className={`${item.span} border-b ${index % 2 === 0 ? 'md:border-r' : ''} border-electric-blue group relative flex flex-col cursor-pointer`}
+            <div
+              key={item.id}
+              className={`${item.span} border-b ${index % 2 === 0 ? 'md:border-r' : ''} border-electric-blue group relative bg-white`}
             >
-              <div className="dither-container w-full min-h-[300px] md:min-h-[400px] overflow-hidden flex-grow border-b border-electric-blue relative">
-                {item.videoUrl ? (
-                  <video 
-                    src={item.videoUrl} 
-                    autoPlay 
-                    loop 
-                    muted 
-                    playsInline 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                ) : (
-                  <img 
-                    src={item.imageUrl} 
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                )}
-                <div className="absolute inset-0 dither-pattern opacity-20 pointer-events-none"></div>
-                <div className="absolute inset-0 flex items-center justify-center bg-electric-blue/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 backdrop-blur-sm">
-                  <p className="font-label-caps text-center text-[#39FF14] text-sm sm:text-lg px-6 py-3 border border-[#39FF14] mx-4 max-w-[90%] md:max-w-sm">
-                    [ KLIK UNTUK BACA CASE STUDY ]
-                  </p>
+              <div
+                role="button"
+                tabIndex={0}
+                aria-label={`Baca case study ${item.title}`}
+                onClick={() => openCase(item)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openCase(item);
+                  }
+                }}
+                onMouseEnter={() => play('hover')}
+                className="tilt-shine flex flex-col cursor-pointer h-full focus-machine"
+              >
+                <Tilt3D maxTilt={3} className="flex flex-col">
+                  <div className="dither-container w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden border-b border-electric-blue relative">
+                    {item.videoUrl ? (
+                      <video
+                        src={item.videoUrl}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    ) : (
+                      <img
+                        src={item.imageUrl}
+                        alt={item.title}
+                        loading="lazy"
+                        decoding="async"
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    )}
+                    <div className="absolute inset-0 dither-pattern opacity-20 pointer-events-none"></div>
+                    <div className="absolute inset-0 flex items-center justify-center bg-electric-blue/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 backdrop-blur-sm">
+                      <p className="font-label-caps text-center text-[#39FF14] text-sm sm:text-lg px-6 py-3 border border-[#39FF14] mx-4 max-w-[90%] md:max-w-sm translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                        [ KLIK UNTUK BACA CASE STUDY ]
+                      </p>
+                    </div>
+                  </div>
+                </Tilt3D>
+                <div className="p-margin bg-white group-hover:bg-electric-blue group-hover:text-white transition-colors duration-300">
+                  <div className="flex justify-between items-start mb-4">
+                    <span className="font-label-caps opacity-60">KLIEN · {item.client}</span>
+                    <span className="font-label-caps opacity-60">{item.status ?? item.category}</span>
+                  </div>
+                  <h3 className="font-headline-md uppercase">{item.title}</h3>
                 </div>
-              </div>
-              <div className="p-margin bg-white group-hover:bg-electric-blue group-hover:text-white transition-colors duration-300">
-                <div className="flex justify-between items-start mb-4">
-                  <span className="font-label-caps opacity-60">CLIENT // {item.client}</span>
-                  <span className="font-label-caps opacity-60">{item.status ?? item.category}</span>
-                </div>
-                <h3 className="font-headline-md uppercase">{item.title}</h3>
               </div>
             </div>
           ))}
@@ -81,22 +122,39 @@ export function WorkSection() {
       </section>
 
       {/* Lightbox Modal */}
-      {selectedWork && (
-        <div className="fixed inset-0 z-[100] bg-white flex flex-col overflow-y-auto animate-in fade-in duration-200">
+      <AnimatePresence>
+        {selectedWork && (
+          <motion.div
+            key="case-study"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[100] bg-white flex flex-col overflow-y-auto"
+          >
+            <motion.div
+              initial={{ y: 24, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 12, opacity: 0 }}
+              transition={{ duration: 0.34, ease: [0.16, 1, 0.3, 1] }}
+              className="flex flex-col flex-grow"
+            >
           <div className="sticky top-0 bg-white z-10 flex justify-between items-center px-margin py-4 border-b border-electric-blue">
-            <span className="font-label-caps text-electric-blue">CASE STUDY // {selectedWork.id}</span>
+            <span className="font-label-caps text-electric-blue">STUDI KASUS · {selectedWork.id}</span>
             <div className="flex items-center gap-4">
               {selectedWork.status && (
                 <span className="font-label-caps text-electric-blue border border-electric-blue border-dashed px-3 py-1 animate-pulse">
                   {selectedWork.status}
                 </span>
               )}
-              <button 
-                onClick={() => setSelectedWork(null)}
-                className="font-label-caps text-electric-blue border border-electric-blue px-6 py-2 hover:bg-electric-blue hover:text-white transition-colors uppercase cursor-pointer"
+              <Pressable
+                onClick={closeCase}
+                cue={"none"}
+                ripple={false}
+                className="font-label-caps text-electric-blue border border-electric-blue px-6 py-2 hover:bg-electric-blue hover:text-white transition-colors uppercase"
               >
                 TERMINATE [ESC]
-              </button>
+              </Pressable>
             </div>
           </div>
           
@@ -118,7 +176,7 @@ export function WorkSection() {
                 )}
                 <div>
                   <span className="font-label-caps block mb-4 border-b border-electric-blue pb-2 text-electric-blue">
-                    ANALYSIS // THE STORY
+                    LATAR
                   </span>
                   <p className="font-body-lg text-electric-blue leading-relaxed text-justify">
                     {selectedWork.story}
@@ -127,7 +185,7 @@ export function WorkSection() {
                 
                 <div>
                   <span className="font-label-caps block mb-4 border-b border-electric-blue pb-2 text-electric-blue">
-                    DIAGNOSIS // THE PROBLEM
+                    MASALAH
                   </span>
                   <p className="font-body-lg text-electric-blue leading-relaxed text-justify opacity-90">
                     {selectedWork.problem}
@@ -136,7 +194,7 @@ export function WorkSection() {
                 
                 <div>
                   <span className="font-label-caps block mb-4 border-b border-electric-blue pb-2 text-electric-blue">
-                    EXECUTION // THE SOLVE
+                    SOLUSI
                   </span>
                   <p className="font-body-lg text-electric-blue leading-relaxed text-justify opacity-90">
                     {selectedWork.solve}
@@ -211,7 +269,7 @@ export function WorkSection() {
                   {selectedWork.images.length > 1 && (
                     <div className="absolute bottom-4 left-4 right-4 z-20 flex justify-between items-center bg-white border border-electric-blue p-2">
                       <button 
-                        onClick={() => setActiveImageIndex((prev) => (prev === 0 ? selectedWork.images!.length - 1 : prev - 1))}
+                        onClick={() => stepImage(-1)}
                         className="font-label-caps text-electric-blue border border-electric-blue px-3 py-1 hover:bg-electric-blue hover:text-white transition-colors cursor-pointer text-xs uppercase"
                       >
                         [ PREV ]
@@ -220,7 +278,7 @@ export function WorkSection() {
                         {activeImageIndex + 1} / {selectedWork.images.length}
                       </span>
                       <button 
-                        onClick={() => setActiveImageIndex((prev) => (prev === selectedWork.images!.length - 1 ? 0 : prev + 1))}
+                        onClick={() => stepImage(1)}
                         className="font-label-caps text-electric-blue border border-electric-blue px-3 py-1 hover:bg-electric-blue hover:text-white transition-colors cursor-pointer text-xs uppercase"
                       >
                         [ NEXT ]
@@ -237,8 +295,10 @@ export function WorkSection() {
               )}
             </div>
           </div>
-        </div>
-      )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

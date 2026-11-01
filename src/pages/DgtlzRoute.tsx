@@ -161,7 +161,7 @@ const PLANS_DATA: RoutePlan[] = [
     isNew: true,
     unlimitedRequest: true,
     prioritySupport: true,
-    modelTags: ['Frontier Reasoning', 'Deep Architectural Logic', 'Anthropic Protocol'],
+    modelTags: ['Frontier Reasoning', 'Deep Architectural Logic', 'Protokol Anthropic'],
     latency: '< 290ms',
     contextWindow: '200K',
     reliability: '99.9%'
@@ -347,7 +347,7 @@ const PLANS_DATA: RoutePlan[] = [
     isNew: true,
     unlimitedRequest: true,
     prioritySupport: true,
-    modelTags: ['Pro Architecture', 'Deep Thinking', 'Vision Exp Module'],
+    modelTags: ['Pro Architecture', 'Deep Thinking', 'Vision Exp'],
     latency: '< 220ms',
     contextWindow: '128K',
     reliability: '99.9%'
@@ -357,14 +357,14 @@ const PLANS_DATA: RoutePlan[] = [
 const ROUTE_ARCHITECTURE_NODES = [
   {
     id: 'node-edge',
-    label: 'DGTLZ INGRESS ROUTER',
+    label: 'DGT.LZ ROUTER',
     sub: 'Geo-DNS & Dynamic Load Balancer',
     type: 'gateway',
-    metrics: '99.98% uptime // <15ms gateway overhead'
+    metrics: 'uptime 99.98% · overhead <15ms'
   },
   {
     id: 'node-failover',
-    label: 'INTELLIGENT FAILOVER CORE',
+    label: 'FAILOVER OTOMATIS',
     sub: 'Real-time Circuit Breakers & Token Pool Rotation',
     type: 'core',
     metrics: 'Automatic 429 / 502 fallback in 40ms'
@@ -474,16 +474,16 @@ stream = client.chat.completions.create(
           <div className="flex items-center gap-3">
             <span className="inline-flex items-center gap-1.5 font-bold uppercase tracking-wider">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              ROUTER STATUS: OPTIMAL (14/14 ENDPOINTS ACTIVE)
+              STATUS: NORMAL (14/14 ENDPOINT AKTIF)
             </span>
             <span className="hidden sm:inline text-white/40">|</span>
             <span className="hidden sm:inline text-white/80">LATENCY AVG: 168ms</span>
             <span className="hidden md:inline text-white/40">|</span>
-            <span className="hidden md:inline text-white/80">FAILOVER: ZERO-DROP AUTO HEALING</span>
+            <span className="hidden md:inline text-white/80">FAILOVER: OTOMATIS TANPA PUTUS</span>
           </div>
           <div className="flex items-center gap-4 text-white/90">
             <span className="font-bold tracking-widest text-[10px] uppercase bg-white/10 px-2 py-0.5 border border-white/20">
-              API PROTOCOL V2.4
+              API V2.4
             </span>
             <span className="text-[10px] text-white/70">OPENAI & ANTHROPIC COMPATIBLE</span>
           </div>
@@ -496,7 +496,7 @@ stream = client.chat.completions.create(
             <div>
               <div className="flex flex-wrap items-center gap-3 mb-6">
                 <span className="font-label-caps bg-electric-blue text-white px-3 py-1 font-bold">
-                  HIGH-THROUGHPUT AI GATEWAY
+                  GATEWAY AI KAPASITAS TINGGI
                 </span>
                 <span className="font-label-caps border border-electric-blue text-electric-blue px-3 py-1 font-bold">
                   AFTER INTELLIGENCE INFRASTRUCTURE
@@ -508,7 +508,7 @@ stream = client.chat.completions.create(
               </h1>
               
               <p className="font-serif text-xl md:text-2xl lg:text-3xl text-electric-blue italic mt-4 max-w-2xl leading-snug">
-                Frontier LLM aggregation engine — Claude Opus 5, DeepSeek V4.1, GLM-5.3, Kimi & Qwen dalam satu unified pipeline.
+                Frontier LLM aggregation engine: Claude Opus 5, DeepSeek V4.1, GLM-5.3, Kimi & Qwen dalam satu unified pipeline.
               </p>
 
               <div className="mt-8 grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-b border-electric-blue/30 py-4 font-mono text-xs">
@@ -542,7 +542,7 @@ stream = client.chat.completions.create(
                 href="#interactive-terminal"
                 className="px-6 py-4 border border-electric-blue text-electric-blue font-bold uppercase tracking-wider hover:bg-electric-blue/5 transition-colors flex items-center gap-2"
               >
-                <Terminal className="w-4 h-4" /> TEST LIVE ROUTER SPEC
+                <Terminal className="w-4 h-4" /> COBA ROUTER LANGSUNG
               </a>
             </div>
           </div>
@@ -555,7 +555,7 @@ stream = client.chat.completions.create(
               <div className="flex items-center justify-between border-b border-electric-blue pb-3">
                 <span className="font-bold text-electric-blue text-xs uppercase flex items-center gap-2">
                   <Activity className="w-4 h-4 animate-spin text-electric-blue" />
-                  GATEWAY TELEMETRY
+                  STATISTIK GATEWAY
                 </span>
                 <span className="text-[10px] bg-electric-blue/10 text-electric-blue px-2 py-0.5 font-bold">
                   2026.09 PROD
@@ -570,7 +570,7 @@ stream = client.chat.completions.create(
                     className="border border-neutral-300 bg-white p-3 hover:border-electric-blue transition-colors relative"
                   >
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-[10px] font-bold text-electric-blue">0{i + 1} // {node.type.toUpperCase()}</span>
+                      <span className="text-[10px] font-bold text-electric-blue">0{i + 1} · {node.type.toUpperCase()}</span>
                       <span className="w-1.5 h-1.5 rounded-full bg-electric-blue"></span>
                     </div>
                     <div className="font-bold text-neutral-900 text-xs">{node.label}</div>
@@ -610,7 +610,7 @@ stream = client.chat.completions.create(
               </p>
             </div>
             <div className="mt-6 pt-3 border-t border-neutral-200 text-[10px] text-neutral-500 uppercase tracking-wider">
-              PROTOCOL // MULTI-ORIGIN PROXY
+              SATU AKSES, BANYAK PROVIDER
             </div>
           </div>
 
@@ -628,7 +628,7 @@ stream = client.chat.completions.create(
               </p>
             </div>
             <div className="mt-6 pt-3 border-t border-neutral-200 text-[10px] text-neutral-500 uppercase tracking-wider">
-              COST EFFICIENCY // ZERO OVERHEAD
+              BIAYA LEBIH HEMAT
             </div>
           </div>
 
@@ -646,7 +646,7 @@ stream = client.chat.completions.create(
               </p>
             </div>
             <div className="mt-6 pt-3 border-t border-neutral-200 text-[10px] text-neutral-500 uppercase tracking-wider">
-              RELIABILITY // 99.9% UPTIME SLA
+              ANDAL, UPTIME 99.9%
             </div>
           </div>
         </div>
@@ -659,7 +659,7 @@ stream = client.chat.completions.create(
             <div>
               <div className="flex items-center gap-2 text-electric-blue text-xs uppercase tracking-widest font-bold">
                 <Terminal className="w-4 h-4" />
-                // DEVELOPER INTEGRATION BENCH
+                COBA INTEGRASI API
               </div>
               <h2 className="font-serif text-2xl md:text-3xl font-bold uppercase mt-1 text-white">
                 Drop-in Replacement SDK
@@ -722,7 +722,7 @@ stream = client.chat.completions.create(
               <div className="border border-neutral-800 bg-neutral-900/60 p-5 font-mono text-xs">
                 <div className="text-xs font-bold text-electric-blue uppercase mb-3 flex items-center gap-2">
                   <Gauge className="w-4 h-4" />
-                  ROUTER METRICS SPEC
+                  METRIK ROUTER
                 </div>
                 <div className="space-y-3 divide-y divide-neutral-800 text-[11px]">
                   <div className="flex justify-between pt-2">
@@ -769,10 +769,10 @@ stream = client.chat.completions.create(
             <div>
               <div className="flex items-center gap-2 text-electric-blue font-mono text-xs uppercase tracking-widest font-bold">
                 <Server className="w-4 h-4" />
-                // ACTIVE ROUTE TIER CATALOG
+                DAFTAR PAKET AKTIF
               </div>
               <h2 className="font-serif font-display-md uppercase tracking-tight text-neutral-900 mt-1">
-                DAFTAR PAKET & TIKET ROUTER
+                DAFTAR PAKET
               </h2>
               <p className="font-mono text-xs text-neutral-600 mt-1 max-w-xl">
                 Temukan kapasitas token dan model frontier yang sesuai dengan skala eksperimen dan beban kerja harian Anda.
@@ -880,7 +880,7 @@ stream = client.chat.completions.create(
                       <div className="bg-neutral-900 text-white px-4 py-2 font-mono text-[10px] flex items-center justify-between border-b border-neutral-900">
                         <span className="uppercase tracking-widest text-neutral-300 flex items-center gap-1.5">
                           <Radio className="w-3 h-3 text-emerald-400" />
-                          TIER // {plan.category.toUpperCase()}
+                          PAKET · {plan.category.toUpperCase()}
                         </span>
                         <div className="flex items-center gap-1">
                           {isPopular && (
@@ -1106,7 +1106,7 @@ stream = client.chat.completions.create(
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 border-b border-electric-blue pb-6">
             <div>
               <span className="text-xs text-electric-blue font-bold tracking-widest uppercase">
-                // SYSTEM PROVISIONING WORKFLOW
+                ALUR AKTIVASI
               </span>
               <h2 className="font-serif font-display-md uppercase tracking-tight text-neutral-900 mt-1">
                 ALUR AKTIVASI 4 MENIT
@@ -1127,7 +1127,7 @@ stream = client.chat.completions.create(
                 </p>
               </div>
               <div className="mt-6 pt-3 border-t border-neutral-200 text-[10px] text-neutral-400 font-bold uppercase">
-                STEP 01 — SELECTION
+                STEP 01 · SELECTION
               </div>
             </div>
 
@@ -1140,7 +1140,7 @@ stream = client.chat.completions.create(
                 </p>
               </div>
               <div className="mt-6 pt-3 border-t border-neutral-200 text-[10px] text-neutral-400 font-bold uppercase">
-                STEP 02 — PROVISIONING
+                STEP 02 · PROVISIONING
               </div>
             </div>
 
@@ -1153,7 +1153,7 @@ stream = client.chat.completions.create(
                 </p>
               </div>
               <div className="mt-6 pt-3 border-t border-neutral-200 text-[10px] text-neutral-400 font-bold uppercase">
-                STEP 03 — INTEGRATION
+                STEP 03 · INTEGRATION
               </div>
             </div>
 
@@ -1166,7 +1166,7 @@ stream = client.chat.completions.create(
                 </p>
               </div>
               <div className="mt-6 pt-3 border-t border-neutral-200 text-[10px] text-neutral-400 font-bold uppercase">
-                STEP 04 — SCALING
+                STEP 04 · SCALING
               </div>
             </div>
           </div>
@@ -1178,7 +1178,7 @@ stream = client.chat.completions.create(
         <div className="max-w-4xl mx-auto px-6 md:px-12 font-mono">
           <div className="text-center mb-12">
             <span className="text-xs text-electric-blue font-bold tracking-widest uppercase">
-              // FREQUENTLY ASKED QUESTIONS
+              TANYA JAWAB
             </span>
             <h2 className="font-serif font-headline-md text-2xl uppercase tracking-tight mt-1 text-neutral-900">
               Pertanyaan Seputar DGTLZ Route
@@ -1274,7 +1274,7 @@ stream = client.chat.completions.create(
               <div className="flex justify-between items-start border-b border-neutral-200 pb-3">
                 <div>
                   <span className="text-[10px] text-neutral-500 uppercase tracking-widest">
-                    TIER SPECIFICATION SHEET // {selectedPlan.category.toUpperCase()}
+                    DETAIL PAKET · {selectedPlan.category.toUpperCase()}
                   </span>
                   <h3 className="font-serif text-2xl font-bold text-neutral-900 mt-1">
                     {selectedPlan.name}

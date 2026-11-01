@@ -106,7 +106,7 @@ export function DgtlzPaygate() {
             PAYGATE ENGINE STATUS: PRIVATE MANAGED ACCESS
           </span>
           <span className="hidden sm:inline text-white/40">|</span>
-          <span className="hidden sm:inline text-white/80">DISPATCH SPEED: &lt; 200MS</span>
+          <span className="hidden sm:inline text-white/80">RESPONS &lt; 200MS</span>
           <span className="hidden md:inline text-white/40">|</span>
           <span className="hidden md:inline text-white/80">NATIONAL QRIS RECOGNITION</span>
         </div>
@@ -260,7 +260,7 @@ export function DgtlzPaygate() {
             {/* Bottom Card Summary */}
             <div className="mt-4 pt-3 border-t border-neutral-800 flex items-center justify-between text-[10px] text-neutral-400">
               <span>SECURITY: ENCRYPTED HTTPS</span>
-              <span className="text-[#39FF14]">DGT.LZ PROTOCOL V1</span>
+              <span className="text-[#39FF14]">DGT.LZ PAYGATE</span>
             </div>
           </div>
         </div>
@@ -319,7 +319,7 @@ export function DgtlzPaygate() {
           <div className="flex flex-col md:flex-row items-start md:items-end justify-between mb-12 pb-4 border-b border-electric-blue">
             <div>
               <span className="font-label-caps bg-black text-[#39FF14] px-2.5 py-0.5 text-[10px] tracking-widest uppercase">
-                SYSTEM SHOWCASE
+                CONTOH PENGGUNAAN
               </span>
               <h2 className="font-display-md uppercase leading-none mt-3">
                 INTEGRASI REAL-WORLD DGTLZ PAYGATE

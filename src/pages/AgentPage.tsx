@@ -13,7 +13,7 @@ const ENGINES = [
     badge: 'AUTONOMOUS OPERATOR',
     icon: Cog,
     tagline: 'Otak operasional yang bekerja di belakang layar.',
-    desc: 'Agent otonom full-stack: orchestrasikan tools, jalanin workflow multi-langkah, kelola data, dan eksekusi keputusan operasional. Sama seperti otak di balik DGTLZ Command Deck — sekarang ditempatkan di bisnis kamu.',
+    desc: 'Agent otonom full-stack: orchestrasikan tools, jalanin workflow multi-langkah, kelola data, dan eksekusi keputusan operasional. Sama seperti otak di balik DGTLZ Command Deck, sekarang ditempatkan di bisnis kamu.',
     includes: [
       'Orchestration tools & workflow multi-langkah',
       'Integrasi web app, PayGate, database & API eksternal',
@@ -35,15 +35,15 @@ const ENGINES = [
       'Integrasi WhatsApp Business, Instagram DM, web chat',
       'Handoff pintar ke admin manusia + transcript lengkap',
     ],
-    bestFor: 'Bisnis yang ramai chat: booking, retail, jasa, komunitas — yang tidak mau kehilangan calon klien di luar jam kerja.',
+    bestFor: 'Bisnis yang ramai chat: booking, retail, jasa, komunitas, yang tidak mau kehilangan calon klien di luar jam kerja.',
     deploy: '3–7 HARI',
   },
   {
     engine: 'CUSTOM BUILD',
     badge: 'TAILOR-MADE',
     icon: Bot,
-    tagline: 'Agent yang dirancang untuk alur kerja kamu — bukan sebaliknya.',
-    desc: 'Booking bot, sales agent, agent keuangan, internal ops — kami pilih engine yang paling pas (Hermes, OpenClaw, atau framework lain) lalu bangun personality, tools, dan guardrail-nya dari nol.',
+    tagline: 'Agent yang dirancang untuk alur kerja kamu, bukan sebaliknya.',
+    desc: 'Booking bot, sales agent, agent keuangan, internal ops, kami pilih engine yang paling pas (Hermes, OpenClaw, atau framework lain) lalu bangun personality, tools, dan guardrail-nya dari nol.',
     includes: [
       'Discovery workshop + agent blueprint',
       'Custom tools & integrasi khusus bisnis kamu',
@@ -57,7 +57,7 @@ const ENGINES = [
 
 const STEPS = [
   { n: '01', title: 'AUDIT GRATIS', desc: 'Bedah alur kerja kamu 45 menit. Kami petakan mana yang bisa dijalankan agent, mana yang tetap manusia, dan estimasi hemat waktunya.' },
-  { n: '02', title: 'BLUEPRINT AGENT', desc: 'Rancangan teknis: engine, tools, integrasi, guardrail, dan skenario percakapan/keputusan. Kamu approve, baru kami bangun.' },
+  { n: '02', title: 'RANCANGAN AGENT', desc: 'Rancangan teknis: engine, tools, integrasi, guardrail, dan skenario percakapan/keputusan. Kamu approve, baru kami bangun.' },
   { n: '03', title: 'DEPLOY & LATIH', desc: 'Agent dipasang ke ecosystem kamu (web app, WhatsApp, PayGate, Telegram), dilatih dengan data & tone bisnis kamu, diuji paralel dengan proses lama.' },
   { n: '04', title: 'RAWAT & UPGRADE', desc: 'Monitoring, evaluasi kualitas jawaban/keputusan, retraining, dan upgrade capability tiap bulan. Agent kamu makin tajam seiring waktu.' },
 ];
@@ -65,7 +65,7 @@ const STEPS = [
 const PLANS = [
   {
     name: 'AGENT STARTER',
-    engine: 'OpenClaw — customer-facing',
+    engine: 'OpenClaw · customer-facing',
     price: 'Rp 3,5 jt',
     unit: 'sekali deploy',
     maint: '+ Rp 750 rb/bln maintenance',
@@ -74,7 +74,7 @@ const PLANS = [
   },
   {
     name: 'AGENT OPERATOR',
-    engine: 'Hermes Agent — autonomous',
+    engine: 'Hermes Agent · autonomous',
     price: 'Rp 10 jt',
     unit: 'sekali deploy',
     maint: '+ Rp 2 jt/bln maintenance',
@@ -96,14 +96,14 @@ const PLANS = [
 const USE_CASES = [
   { icon: Calendar, t: 'Booking & Appointment', d: 'Chat → tawarkan slot → kirim QRIS DP → slot terkunci otomatis.' },
   { icon: MessageSquare, t: 'Support 24/7', d: 'Jawab pertanyaan berulang kapan pun, eskalasi ke manusia saat perlu.' },
-  { icon: Wallet, t: 'Follow-up & Sales', d: 'Qualifikasi lead, kirim penawaran, ingatkan invoice — tanpa lupa.' },
+  { icon: Wallet, t: 'Follow-up & Sales', d: 'Qualifikasi lead, kirim penawaran, ingatkan invoice, tanpa lupa.' },
   { icon: Cog, t: 'Internal Ops', d: 'Data entry, rekap harian, reminder tim, koordinasi lintas channel.' },
   { icon: Activity, t: 'Monitoring', d: 'Pantau transaksi & sistem, alarm Telegram kalau ada anomali.' },
-  { icon: Bot, t: 'Fleet Multi-Agent', d: 'Sales agent menyerahkan ke ops agent — ecosystem yang saling terhubung.' },
+  { icon: Bot, t: 'Fleet Multi-Agent', d: 'Sales agent menyerahkan ke ops agent, ecosystem yang saling terhubung.' },
 ];
 
 const FAQ = [
-  { q: 'AGENT BISA PAKAI MODEL AI KAMI SENDIRI?', a: 'Bisa. Lewat DGTLZ Route, agent bisa diarahkan ke provider mana pun — termasuk API private/self-hosted — dengan routing & fallback otomatis.' },
+  { q: 'AGENT BISA PAKAI MODEL AI KAMI SENDIRI?', a: 'Bisa. Lewat DGTLZ Route, agent bisa diarahkan ke provider mana pun, termasuk API private/self-hosted, dengan routing & fallback otomatis.' },
   { q: 'KALAU AGENT SALAH JAWAB ATAU SALAH KEPUTUSAN?', a: 'Setiap agent punya guardrail: batas wewenang, approval gate untuk aksi kritis, escalation ke manusia, dan audit log. Agent tidak pernah jalan tanpa pagar.' },
   { q: 'DATA BISNIS KAMI AMAN?', a: 'Agent jalan di infrastruktur yang kami kelola dengan credential terpisah per klien. Untuk kebutuhan ketat, kami bisa deploy di server kamu sendiri (self-hosted).' },
   { q: 'BERAPA LAMA SAMPAI AGENT BENERAN PAKAI?', a: 'OpenClaw 3–7 hari, Hermes Agent 1–2 minggu, custom 2–4 minggu. Selalu ada masa uji paralel dengan proses lama sebelum full handover.' },
@@ -121,12 +121,12 @@ export default function AgentPage() {
       {/* ===== HERO ===== */}
       <header className="border-b border-[#39FF14]/30">
         <div className="p-margin pt-16 pb-12">
-          <span className="font-label-caps block text-[#39FF14] mb-4">DGTLZ AGENT // DEPLOY ON DEMAND</span>
+          <span className="font-label-caps block text-[#39FF14] mb-4">AI AGENT UNTUK BISNIS</span>
           <h1 className="font-display-xl leading-none uppercase">
             AGENT KERJA<span className="text-[#39FF14]">.</span><br />BISNIS JALAN<span className="text-[#39FF14]">.</span>
           </h1>
           <p className="font-body-sm opacity-80 max-w-2xl mt-6 leading-relaxed">
-            Kami deploy AI agent siap pakai ke dalam bisnis kamu — layani pelanggan, follow-up lead, terima booking & pembayaran, jalankan operasional 24/7. Pilih engine-nya, kami yang pasang, latih, dan rawat.
+            Kami deploy AI agent siap pakai ke dalam bisnis kamu: layani pelanggan, follow-up lead, terima booking & pembayaran, jalankan operasional 24/7. Pilih engine-nya, kami yang pasang, latih, dan rawat.
           </p>
           <div className="flex flex-wrap gap-3 mt-8">
             <a href={WA_LINK} target="_blank" rel="noopener noreferrer"
@@ -223,7 +223,7 @@ export default function AgentPage() {
         <div className="p-margin pt-12 pb-6">
           <span className="font-label-caps block text-[#39FF14] mb-2">INVESTASI</span>
           <h2 className="font-display-lg leading-none uppercase">MULAI SEBESAR KEBUTUHAN KAMU<span className="text-[#39FF14]">.</span></h2>
-          <p className="font-mono text-[11px] opacity-60 mt-3">Harga final ditentukan setelah audit gratis — tergantung kompleksitas integrasi & volume percakapan.</p>
+          <p className="font-mono text-[11px] opacity-60 mt-3">Harga final ditentukan setelah audit gratis, tergantung kompleksitas integrasi & volume percakapan.</p>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3">
           {PLANS.map((p, i) => (
@@ -277,7 +277,7 @@ export default function AgentPage() {
       <section className="p-margin py-16 text-center">
         <h2 className="font-display-lg leading-none uppercase mb-4">SIAP PUNYA AGENT<span className="text-[#39FF14]">?</span></h2>
         <p className="font-body-sm opacity-80 max-w-xl mx-auto mb-8">
-          Mulai dari audit gratis 45 menit. Kalau agent tidak cocok untuk bisnis kamu, kami bilang apa adanya — bukan maksa jual.
+          Mulai dari audit gratis 45 menit. Kalau agent tidak cocok untuk bisnis kamu, kami bilang apa adanya, bukan maksa jual.
         </p>
         <div className="flex flex-wrap justify-center gap-3">
           <a href={WA_LINK} target="_blank" rel="noopener noreferrer"

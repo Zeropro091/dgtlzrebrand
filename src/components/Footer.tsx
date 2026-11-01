@@ -1,9 +1,15 @@
+import { useSound } from '../lib/useSound';
+
 export function Footer() {
+  const { play } = useSound();
+
   return (
     <footer className="flex flex-col md:flex-row justify-between items-center w-full px-margin py-10 gap-gutter bg-electric-blue text-on-primary border-t-2 border-on-primary">
       <div className="font-display-xl text-headline-lg">DGT</div>
       <div className="flex flex-col md:flex-row gap-8 items-center font-body-sm uppercase tracking-widest">
-        <a className="opacity-70 hover:opacity-100 transition-opacity" href="/systems">SYSTEMS</a>
+        <a onMouseEnter={() => play('hover')}
+          onClick={() => play('nav')}
+          className="opacity-70 hover:opacity-100 transition-opacity draw-underline" href="/systems">SYSTEMS</a>
         <a className="opacity-70 hover:opacity-100 transition-opacity" href="#">TERMS</a>
         <a className="opacity-70 hover:opacity-100 transition-opacity" href="#">SHIPPING</a>
         <a className="opacity-70 hover:opacity-100 transition-opacity" href="https://wa.me/6281237729115" target="_blank" rel="noopener noreferrer">CONTACT</a>

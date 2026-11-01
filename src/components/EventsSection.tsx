@@ -1,6 +1,9 @@
-import { events } from '../data';
+﻿import { events } from '../data';
+import { useSound } from '../lib/useSound';
 
 export function EventsSection() {
+  const { play } = useSound();
+
   return (
     <section id="events" className="border-b border-electric-blue bg-white">
       <div className="grid grid-cols-1 md:grid-cols-12">
@@ -37,6 +40,8 @@ export function EventsSection() {
               <div className="flex flex-col md:flex-row justify-between items-start md:items-center mt-auto border-t border-current pt-4">
                 <span className="font-label-caps mb-4 md:mb-0">LOC: {event.location}</span>
                 <button 
+                  onMouseEnter={() => play('hover')}
+                  onClick={() => play('success')}
                   className={`font-label-caps px-6 py-3 border-2 transition-all cursor-pointer ${
                     event.status === 'OPEN' 
                       ? 'border-current group-hover:bg-white group-hover:text-electric-blue hover:!bg-black hover:!text-white hover:!border-black' 

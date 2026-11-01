@@ -77,9 +77,9 @@ export function Systems() {
       {/* Grand Brutalist Header */}
       <header className="grid grid-cols-1 md:grid-cols-12 border-b border-electric-blue">
         <div className="col-span-12 p-margin flex flex-col justify-end min-h-[300px] bg-electric-blue text-white relative overflow-hidden">
-          <span className="font-label-caps mb-4 z-10">CLASSIFICATION // SYSTEM INDEX & DESCRIPTIONS</span>
+          <span className="font-label-caps mb-4 z-10">DAFTAR SISTEM & DESKRIPSI</span>
           <h1 className="font-display-xl leading-none uppercase z-10">
-            SYSTEM TAXONOMY
+            KATEGORI SISTEM
           </h1>
           <div className="absolute inset-0 dither-pattern opacity-10 pointer-events-none"></div>
         </div>
@@ -97,7 +97,7 @@ export function Systems() {
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="FILTER BY ID, NAME, KEYWORDS..."
+              placeholder="Cari sistem, kategori, atau kata kunci..."
               className="w-full px-6 py-4 font-mono text-sm focus:outline-none bg-white text-electric-blue placeholder-electric-blue/45 uppercase"
             />
             {searchQuery && (
@@ -112,7 +112,7 @@ export function Systems() {
 
           {/* Quick Filters */}
           <div className="lg:col-span-8 flex items-center overflow-x-auto no-scrollbar py-2 px-margin gap-2 bg-off-white/40">
-            <span className="font-label-caps text-[10px] opacity-60 mr-2 shrink-0">MODULE:</span>
+            <span className="font-label-caps text-[10px] opacity-60 mr-2 shrink-0">KATEGORI:</span>
             {allModuleCodes.map((code) => (
               <button
                 key={code}
@@ -131,8 +131,8 @@ export function Systems() {
 
         {/* Telemetry Counter */}
         <div className="bg-electric-blue/5 border-t border-electric-blue px-margin py-2 flex justify-between items-center text-xs font-mono text-electric-blue font-semibold">
-          <span>ACTIVE TELEMETRY LOADED</span>
-          <span>{totalFilteredCount} / 301 SYSTEM SPECIFICATIONS</span>
+          <span>DATA TERBARU</span>
+          <span>{totalFilteredCount} dari {modulesData.reduce((n, m) => n + m.systems.length, 0)} sistem</span>
         </div>
       </div>
 
@@ -140,7 +140,7 @@ export function Systems() {
       <main className="p-margin max-w-7xl mx-auto space-y-16 py-12">
         {filteredModules.length === 0 ? (
           <div className="border border-dashed border-electric-blue p-16 text-center text-electric-blue">
-            <div className="font-label-caps text-lg font-bold mb-4">[ NO SYSTEM BLUEPRINTS MATCH SEARCH PROTOCOL ]</div>
+            <div className="font-label-caps text-lg font-bold mb-4">TIDAK ADA SISTEM YANG COCOK</div>
             <button 
               onClick={() => { setSearchQuery(''); applyModuleFilter('ALL'); }}
               className="font-label-caps border border-electric-blue px-6 py-2 hover:bg-electric-blue hover:text-white transition-colors cursor-pointer"
@@ -163,7 +163,7 @@ export function Systems() {
                   {/* Top line of banner */}
                   <div className="flex justify-between items-start z-10">
                     <span className="font-label-caps text-xs opacity-80 tracking-wider">
-                      DGT.LZ SYSTEM DIRECTORY // MODULE {mod.id}
+                      DGT.LZ · SISTEM {mod.id}
                     </span>
                     <span className={`font-mono text-3xl md:text-5xl font-extrabold ${style.accentText}`}>
                       {mod.id}
@@ -225,7 +225,7 @@ export function Systems() {
         <div className="fixed inset-0 z-[100] bg-white flex flex-col overflow-y-auto animate-in fade-in duration-200">
           {/* Modal Header */}
           <div className="sticky top-0 bg-white z-10 flex justify-between items-center px-margin py-4 border-b border-electric-blue">
-            <span className="font-label-caps text-electric-blue font-bold">SYSTEM SPECIFICATION // {selectedSystem.id}</span>
+            <span className="font-label-caps text-electric-blue font-bold">DETAIL SISTEM · {selectedSystem.id}</span>
             <button 
               onClick={() => setSelectedSystem(null)}
               className="font-label-caps text-electric-blue border border-electric-blue px-6 py-2 hover:bg-electric-blue hover:text-white transition-colors uppercase cursor-pointer"
@@ -250,7 +250,7 @@ export function Systems() {
               <div className="space-y-6">
                 <div>
                   <span className="font-label-caps block mb-2 border-b border-electric-blue pb-2 text-electric-blue font-bold">
-                    SYSTEM TITLE
+                    NAMA SISTEM
                   </span>
                   <p className="font-body-lg text-electric-blue leading-relaxed text-justify">
                     {selectedSystem.description}
@@ -260,7 +260,7 @@ export function Systems() {
                 {selectedSystem.originalTitle && (
                   <div>
                     <span className="font-label-caps block mb-2 border-b border-electric-blue pb-2 text-electric-blue font-bold">
-                      SHORT SPECIFICATION
+                      RINGKASAN
                     </span>
                     <h4 className="font-mono font-bold text-sm text-electric-blue uppercase">
                       {selectedSystem.originalTitle}

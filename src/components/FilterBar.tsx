@@ -1,7 +1,15 @@
 import { useState } from 'react';
+import { useSound } from '../lib/useSound';
 
 export function FilterBar() {
   const [activeFilter, setActiveFilter] = useState('ALL_ITEMS');
+  const { play } = useSound();
+
+  const select = (f: string) => {
+    if (f === activeFilter) return;
+    setActiveFilter(f);
+    play('filter');
+  };
   const filters = ['ALL_ITEMS', 'SEATING', 'LIGHTING', 'MODULAR', 'PROTOTYPES'];
 
   return (
@@ -14,7 +22,8 @@ export function FilterBar() {
             {filters.map((filter) => (
               <button 
                 key={filter}
-                onClick={() => setActiveFilter(filter)}
+                onClick={() => select(filter)}
+                onMouseEnter={() => play('hover')}
                 className={`cursor-pointer transition-all ${activeFilter === filter ? 'underline underline-offset-4 decoration-2' : 'opacity-60 hover:opacity-100 hover:underline'}`}
               >
                 {filter}
@@ -24,7 +33,7 @@ export function FilterBar() {
           <span className="terminal-cursor"></span>
         </div>
         <div className="hidden md:block opacity-40 text-[10px] tracking-widest font-label-caps">
-          BUILD_ID: 2024.AR.09 // LATENCY: 24MS
+          DATA LIVE
         </div>
       </div>
     </section>

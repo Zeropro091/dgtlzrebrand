@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { modulesData } from '../systemsData';
 import { getModuleStyle } from '../moduleStyles';
+import { useSound } from '../lib/useSound';
 
 const slugify = (code: string) => code.replace('DGT.LZ-', '').toLowerCase();
 
@@ -12,6 +13,8 @@ const slugify = (code: string) => code.replace('DGT.LZ-', '').toLowerCase();
  * never implies a 1-10 sequence.
  */
 export function SystemsTeaserSection() {
+  const { play } = useSound();
+
   const totalSystems = modulesData.reduce((sum, m) => sum + m.systems.length, 0);
   const maxSystems = Math.max(...modulesData.map((m) => m.systems.length));
   const ranked = [...modulesData].sort((a, b) => b.systems.length - a.systems.length);
@@ -21,17 +24,16 @@ export function SystemsTeaserSection() {
       {/* Section header: brand band, not a list intro */}
       <div className="grid grid-cols-1 md:grid-cols-12 border-b border-electric-blue">
         <div className="md:col-span-8 p-margin pb-6">
-          <span className="font-label-caps block mb-4">SPECIAL SECTION // ARSENAL INDEX</span>
+          <span className="font-label-caps block mb-4">SISTEM YANG KAMI BANGUN</span>
           <h2 className="font-display-lg leading-none uppercase">
             DGTLZ AUTOMATION
             <br />
-            ARSENAL<span className="text-electric-blue">.</span>
+            SISTEM<span className="text-electric-blue">.</span>
           </h2>
         </div>
         <div className="md:col-span-4 p-margin md:py-6 md:pl-0 border-t md:border-t-0 md:border-l border-electric-blue flex flex-col justify-center">
           <p className="font-body-sm opacity-80 max-w-sm">
-            {totalSystems} system blueprint terklasifikasi ke dalam {modulesData.length} modul —
-            tidak ditampilkan berurutan. Semua bagian dari satu arsenal.
+            {totalSystems} sistem dalam {modulesData.length} kategori, tidak ditampilkan berurutan. Semuanya bagian dari ekosistem yang sama.
           </p>
         </div>
       </div>
@@ -73,13 +75,15 @@ export function SystemsTeaserSection() {
       {/* CTA band: single arsenal-wide action */}
       <div className="border-t border-electric-blue p-margin flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <span className="font-label-caps text-xs opacity-60">
-          // FULL DIRECTORY: SETIAP MODUL, SEMUA SYSTEM
+          DIREKTORI LENGKAP: SEMUA MODUL DAN SISTEM
         </span>
         <Link
-          to="/systems"
+                onMouseEnter={() => play('hover')}
+                onClick={() => play('nav')}
+                to="/systems"
           className="font-label-caps inline-flex items-center justify-center gap-3 bg-electric-blue text-white border border-electric-blue px-8 py-4 w-full sm:w-auto text-center hover:bg-white hover:text-electric-blue transition-colors"
         >
-          VISIT ARSENAL →
+          LIHAT SEMUA SISTEM →
         </Link>
       </div>
     </section>

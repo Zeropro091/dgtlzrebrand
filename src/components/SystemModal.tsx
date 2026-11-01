@@ -32,7 +32,7 @@ export function SystemModal({ system, onClose }: SystemModalProps) {
   return (
     <div className="fixed inset-0 z-[100] bg-white flex flex-col overflow-y-auto animate-in fade-in duration-200">
       <div className="sticky top-0 bg-white z-10 flex justify-between items-center px-margin py-4 border-b border-electric-blue">
-        <span className="font-label-caps text-electric-blue font-bold">SYSTEM SPECIFICATION // {system.id}</span>
+        <span className="font-label-caps text-electric-blue font-bold">DETAIL SISTEM · {system.id}</span>
         <button
           onClick={onClose}
           className="font-label-caps text-electric-blue border border-electric-blue px-6 py-2 hover:bg-electric-blue hover:text-white transition-colors uppercase cursor-pointer"
@@ -56,7 +56,7 @@ export function SystemModal({ system, onClose }: SystemModalProps) {
           <div className="space-y-6">
             <div>
               <span className="font-label-caps block mb-2 border-b border-electric-blue pb-2 text-electric-blue font-bold">
-                SYSTEM TITLE
+                NAMA SISTEM
               </span>
               <p className="font-body-lg text-electric-blue leading-relaxed text-justify">
                 {system.description}
@@ -66,7 +66,7 @@ export function SystemModal({ system, onClose }: SystemModalProps) {
             {system.originalTitle && (
               <div>
                 <span className="font-label-caps block mb-2 border-b border-electric-blue pb-2 text-electric-blue font-bold">
-                  SHORT SPECIFICATION
+                  RINGKASAN
                 </span>
                 <h4 className="font-mono font-bold text-sm text-electric-blue uppercase">
                   {system.originalTitle}

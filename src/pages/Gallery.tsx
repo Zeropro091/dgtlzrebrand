@@ -69,7 +69,7 @@ export function Gallery() {
     <>
       <header className="grid grid-cols-1 md:grid-cols-12 border-b border-electric-blue">
         <div className="col-span-12 md:col-span-12 p-margin flex flex-col justify-end min-h-[300px] bg-electric-blue text-white">
-          <span className="font-label-caps mb-4">ARCHIVE // GRAPHIC EXPLORATIONS</span>
+          <span className="font-label-caps mb-4">GALERI KARYA</span>
           <h1 className="font-display-xl leading-none uppercase">
             GALLERY
           </h1>
@@ -92,7 +92,7 @@ export function Gallery() {
               <div className="absolute inset-0 dither-pattern opacity-20 pointer-events-none"></div>
               <div className="absolute inset-0 flex items-center justify-center bg-electric-blue/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 backdrop-blur-sm">
                 <p className="font-label-caps text-center text-[#39FF14] text-sm sm:text-lg px-6 py-3 border border-[#39FF14] mx-4 max-w-[90%] md:max-w-sm">
-                  [ CLICK TO INITIALIZE FULL ANALYSIS ]
+                  Klik untuk lihat detail
                 </p>
               </div>
             </div>
@@ -108,7 +108,7 @@ export function Gallery() {
       {selectedItem && (
         <div className="fixed inset-0 z-[100] bg-white flex flex-col overflow-y-auto animate-in fade-in duration-200">
           <div className="sticky top-0 bg-white z-10 flex justify-between items-center px-margin py-4 border-b border-electric-blue">
-            <span className="font-label-caps text-electric-blue">VIEWER // {selectedItem.id}</span>
+            <span className="font-label-caps text-electric-blue">KARYA · {selectedItem.id}</span>
             <button 
               onClick={() => setSelectedItem(null)}
               className="font-label-caps text-electric-blue border border-electric-blue px-6 py-2 hover:bg-electric-blue hover:text-white transition-colors uppercase cursor-pointer"
@@ -125,7 +125,7 @@ export function Gallery() {
               
               <div className="mt-auto">
                 <span className="font-label-caps block mb-6 border-b border-electric-blue pb-4 text-electric-blue">
-                  ANALYSIS // MEANING
+                  MAKNA
                 </span>
                 <p className="font-body-lg md:text-lg leading-relaxed text-justify text-electric-blue">
                   {selectedItem.story}

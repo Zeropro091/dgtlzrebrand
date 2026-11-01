@@ -1,15 +1,30 @@
-import { useState, type FormEvent } from 'react';
+﻿import { useState, useEffect, useRef, type FormEvent } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { submitLead } from '../lib/deckApi';
+import { useSound } from '../lib/useSound';
+import { Pressable } from './Pressable';
 
 export function ContactSection() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [state, setState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
+  const { play } = useSound();
+  const soundedFor = useRef<string>('idle');
+
+  useEffect(() => {
+    if (soundedFor.current === state) return;
+    soundedFor.current = state;
+    if (state === 'sent') play('success');
+    else if (state === 'error') play('error');
+  }, [state, play]);
 
   async function submit(e: FormEvent) {
     e.preventDefault();
-    if (!name || !email) return;
+    if (!name || !email) {
+      play('error');
+      return;
+    }
     setState('sending');
     try {
       await submitLead({ name, contact: email, message });
@@ -61,33 +76,69 @@ export function ContactSection() {
           <form onSubmit={submit} className="flex flex-col gap-8 h-full">
             <div className="flex flex-col gap-2">
               <label className="font-label-caps">NAMA</label>
-              <input type="text" value={name} onChange={(e) => setName(e.target.value)} required className="border-b-2 border-electric-blue bg-transparent outline-none py-2 font-body-sm focus:border-opacity-50 transition-colors" placeholder="Tulis nama kamu" />
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} onFocus={() => play('tick')} required className="border-b-2 border-electric-blue bg-transparent outline-none py-2 font-body-sm focus:border-blue-400 transition-colors focus-machine" placeholder="Tulis nama kamu" />
             </div>
             <div className="flex flex-col gap-2">
               <label className="font-label-caps">EMAIL</label>
-              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="border-b-2 border-electric-blue bg-transparent outline-none py-2 font-body-sm focus:border-opacity-50 transition-colors" placeholder="Tulis email kamu" />
+              <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} onFocus={() => play('tick')} required className="border-b-2 border-electric-blue bg-transparent outline-none py-2 font-body-sm focus:border-blue-400 transition-colors focus-machine" placeholder="Tulis email kamu" />
             </div>
             <div className="flex flex-col gap-2 flex-grow">
               <label className="font-label-caps">PESAN</label>
-              <textarea value={message} onChange={(e) => setMessage(e.target.value)} className="border-b-2 border-electric-blue bg-transparent outline-none py-2 font-body-sm focus:border-opacity-50 transition-colors flex-grow resize-none min-h-[150px]" placeholder="Ceritakan kebutuhan kamu..."></textarea>
+              <textarea value={message} onChange={(e) => setMessage(e.target.value)} onFocus={() => play('tick')} className="border-b-2 border-electric-blue bg-transparent outline-none py-2 font-body-sm focus:border-blue-400 transition-colors flex-grow resize-none min-h-[150px] focus-machine" placeholder="Ceritakan kebutuhan kamu..."></textarea>
             </div>
-            {state === 'sent' && (
-              <p className="font-label-caps text-sm border-2 border-[#39FF14] px-4 py-3" style={{ color: '#0a8a0a' }}>
-                ✓ Pesan terkirim — kami balas dalam 24 jam.
-              </p>
-            )}
-            {state === 'error' && (
-              <p className="font-label-caps text-sm border-2 border-red-600 text-red-600 px-4 py-3">
-                ✕ Gagal mengirim — coba lagi atau hubungi via WhatsApp.
-              </p>
-            )}
-            <button
+            <AnimatePresence mode="wait">
+              {state === 'sent' && (
+                <motion.p
+                  key="sent"
+                  initial={{ opacity: 0, y: -8, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  className="font-label-caps text-sm border-2 border-[#39FF14] px-4 py-3"
+                  style={{ color: '#0a8a0a' }}
+                >
+                  ✓ Pesan terkirim — kami balas dalam 24 jam.
+                </motion.p>
+              )}
+              {state === 'error' && (
+                <motion.p
+                  key="error"
+                  initial={{ opacity: 0, x: -8 }}
+                  animate={{ opacity: 1, x: [0, -5, 5, -3, 3, 0] }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.42 }}
+                  className="font-label-caps text-sm border-2 border-red-600 text-red-600 px-4 py-3"
+                >
+                  ✕ Gagal mengirim — coba lagi atau hubungi via WhatsApp.
+                </motion.p>
+              )}
+            </AnimatePresence>
+            <Pressable
               type="submit"
               disabled={state === 'sending'}
-              className="bg-electric-blue text-white px-8 py-4 font-label-caps hover:bg-transparent hover:text-electric-blue border-2 border-electric-blue transition-all mt-auto cursor-pointer disabled:opacity-50"
+              cue="mechanical"
+              ripple
+              className="bg-electric-blue text-white px-8 py-4 font-label-caps hover:bg-transparent hover:text-electric-blue border-2 border-electric-blue transition-all mt-auto disabled:opacity-50"
             >
-              {state === 'sending' ? 'MENGIRIM…' : 'KIRIM PESAN'}
-            </button>
+              <span className="w-full text-center">
+                {state === 'sending' ? (
+                  <span className="inline-flex items-center gap-2 justify-center">
+                    MENGIRIM
+                    <span className="inline-flex gap-1" aria-hidden="true">
+                      {[0, 1, 2].map((i) => (
+                        <span
+                          key={i}
+                          className="inline-block w-1 h-1 bg-current rounded-full"
+                          style={{ animation: `eq-bounce 0.7s ${i * 0.12}s ease-in-out infinite alternate` }}
+                        />
+                      ))}
+                    </span>
+                  </span>
+                ) : (
+                  'KIRIM PESAN'
+                )}
+              </span>
+            </Pressable>
           </form>
        </div>
     </section>

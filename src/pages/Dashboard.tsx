@@ -31,6 +31,7 @@ import {
   Image as ImageIcon,
   Pencil,
   Trash2,
+  Calendar,
 } from 'lucide-react';
 import {
   auth,
@@ -342,7 +343,7 @@ export function Dashboard() {
       <div className="min-h-screen bg-[#F4F3EF] flex flex-col items-center justify-center font-mono">
         <div className="flex items-center gap-2 text-xs font-black tracking-widest text-neutral-900 uppercase">
           <div className="w-2 h-2 rounded-full bg-electric-blue animate-ping" />
-          <span>INITIALIZING COMMAND DECK...</span>
+          <span>Menyiapkan dashboard...</span>
         </div>
       </div>
     );
@@ -350,18 +351,18 @@ export function Dashboard() {
 
   // Navigation Items Definition
   const navItems: Array<{ id: Tab; label: string; icon: any; count?: number; hide?: boolean }> = [
-    { id: 'OVERVIEW', label: 'MAIN DECK', icon: LayoutDashboard },
+    { id: 'OVERVIEW', label: 'RINGKASAN', icon: LayoutDashboard },
     { id: 'TASKS', label: 'MY TASKS', icon: CheckCircle2, count: (() => { const t = collectTasks(projects || [], user.email); return t.filter((x) => !x.done && x.isMine).length; })(), hide: user.role === 'client' },
-    { id: 'OPS', label: 'PIPELINE', icon: Layers, count: (projects || []).filter((p) => p.phase !== 'LIVE').length },
-    { id: 'CHAT', label: 'COMMS', icon: MessageSquare, count: recentMessages.length },
-    { id: 'TEAM', label: 'SQUAD', icon: Users, hide: user.role === 'client' },
-    { id: 'FINANCE', label: 'TREASURY', icon: Wallet, hide: user.role === 'client' },
+    { id: 'OPS', label: 'PROYEK', icon: Layers, count: (projects || []).filter((p) => p.phase !== 'LIVE').length },
+    { id: 'CHAT', label: 'PESAN', icon: MessageSquare, count: recentMessages.length },
+    { id: 'TEAM', label: 'TIM', icon: Users, hide: user.role === 'client' },
+    { id: 'FINANCE', label: 'KEUANGAN', icon: Wallet, hide: user.role === 'client' },
     { id: 'GATEWAY', label: 'PAYGATE', icon: QrCode, count: gateway?.summary.pending || 0 },
     { id: 'CLIENT', label: 'PORTAL', icon: Target, hide: user.role !== 'client' },
-    { id: 'ADMIN', label: 'LEADS & ACCESS', icon: ShieldAlert, count: (leads || []).filter((l) => l.status === 'NEW').length, hide: user.role === 'client' },
-    { id: 'SITEOPS', label: 'SITE OPS', icon: Globe, hide: user.role === 'client' },
-    { id: 'CREW_TOOLS', label: 'CREW TOOLS', icon: Wrench, hide: user.role === 'client' },
-    { id: 'SETTINGS', label: 'CONFIG', icon: Settings },
+    { id: 'ADMIN', label: 'LEADS & AKSES', icon: ShieldAlert, count: (leads || []).filter((l) => l.status === 'NEW').length, hide: user.role === 'client' },
+    { id: 'SITEOPS', label: 'SITUS', icon: Globe, hide: user.role === 'client' },
+    { id: 'CREW_TOOLS', label: 'TOOLS TIM', icon: Wrench, hide: user.role === 'client' },
+    { id: 'SETTINGS', label: 'PENGATURAN', icon: Settings },
   ];
 
   return (
@@ -375,7 +376,7 @@ export function Dashboard() {
                 DGT.LZ
               </span>
               <span className="text-[11px] font-black tracking-widest text-neutral-900 hidden sm:inline">
-                COMMAND DECK // v2.6
+                DASHBOARD
               </span>
             </Link>
 
@@ -486,16 +487,16 @@ export function Dashboard() {
             <div className="space-y-4 text-xs">
               <div>
                 <span className="font-black text-neutral-500 text-[10px] uppercase tracking-wider block mb-2">
-                  MODULE VISIBILITY TOGGLES
+                  TAMPILAN MENU
                 </span>
                 <div className="mb-3">
                   <span className="font-black text-neutral-500 text-[10px] uppercase tracking-wider block mb-2">
-                    Landing Mode — layar pertama saat buka deck
+                    Landing Mode: layar pertama saat buka dashboard
                   </span>
                   <div className="grid grid-cols-2 gap-2">
                     {([
                       { id: 'DECK', label: 'MAIN DECK (Project-First)', desc: 'Overview modular & pipeline' },
-                      { id: 'TASKS', label: 'TASK BOARD (Task-First)', desc: 'Daftar tugas personal' },
+                      { id: 'TASKS', label: 'PAPAN TUGAS (Task-First)', desc: 'Daftar tugas personal' },
                     ] as const).map((m) => {
                       const active = deckConfig.defaultLanding === m.id;
                       return (
@@ -676,7 +677,7 @@ export function Dashboard() {
 // =============================================================
 // OVERVIEW DECK MODULE: Customizable Executive Control Matrix
 // =============================================================
-// ---- TODAY DOCK: deliverable jatuh tempo hari ini lintas proyek ----
+// ---- HARI INI: deliverable jatuh tempo hari ini lintas proyek ----
 function TodayDock({
   projects,
   onToggle,
@@ -702,7 +703,7 @@ function TodayDock({
       <div className="flex items-center justify-between border-b-2 border-neutral-900 bg-amber-50 px-4 py-3">
         <div className="flex items-center gap-2">
           <Clock className="w-4 h-4 text-amber-600" />
-          <h2 className="font-mono text-xs font-black tracking-widest uppercase text-neutral-900">TODAY DOCK</h2>
+          <h2 className="font-mono text-xs font-black tracking-widest uppercase text-neutral-900">HARI INI</h2>
           <span className="text-[10px] font-mono text-neutral-500">DELIVERABLES JATUH TEMPO HARI INI</span>
         </div>
         <span className="text-xs font-black bg-neutral-900 text-white px-2 py-0.5">{items.length}</span>
@@ -803,7 +804,7 @@ function OverviewDeck({
 
   return (
     <div className={`space-y-6 ${config.density === 'compact' ? 'text-xs' : 'text-sm'}`}>
-      {/* 0. TODAY DOCK — deliverables jatuh tempo hari ini */}
+      {/* 0. HARI INI — deliverables jatuh tempo hari ini */}
       {config.showToday && (projects || []).length > 0 && (
         <TodayDock projects={projects || []} onToggle={toggleToday} busyProject={busyProject} />
       )}
@@ -815,7 +816,7 @@ function OverviewDeck({
             className="border-2 border-neutral-900 bg-white p-4 cursor-pointer hover:border-electric-blue transition-all group border-l-4 border-l-electric-blue"
           >
             <div className="flex justify-between items-center text-neutral-500 text-[10px] font-bold">
-              <span>PIPELINE RADAR</span>
+              <span>PROYEK BERJALAN</span>
               <Layers className="w-3.5 h-3.5 text-electric-blue" />
             </div>
             <div className="mt-2 text-2xl font-black text-neutral-900 group-hover:text-electric-blue transition-colors">
@@ -829,13 +830,13 @@ function OverviewDeck({
             className="border-2 border-neutral-900 bg-white p-4 cursor-pointer hover:border-electric-blue transition-all group border-l-4 border-l-neutral-900"
           >
             <div className="flex justify-between items-center text-neutral-500 text-[10px] font-bold">
-              <span>COMMS STREAM</span>
+              <span>PESAN TERBARU</span>
               <MessageSquare className="w-3.5 h-3.5 text-neutral-700" />
             </div>
             <div className="mt-2 text-2xl font-black text-neutral-900 group-hover:text-electric-blue transition-colors">
               {recentMessages.length} <span className="text-xs font-normal text-neutral-500">RECENT</span>
             </div>
-            <div className="text-[10px] text-neutral-400 mt-1 uppercase">REALTIME DISPATCHES</div>
+            <div className="text-[10px] text-neutral-400 mt-1 uppercase">PESAN MASUK</div>
           </div>
 
           <div
@@ -865,7 +866,7 @@ function OverviewDeck({
             <div className={`mt-2 text-xl font-black ${(finance?.summary.net || 0) >= 0 ? 'text-emerald-900' : 'text-red-600'}`}>
               {rp(finance?.summary.net || 0)}
             </div>
-            <div className="text-[10px] text-neutral-400 mt-1 uppercase">REVENUE BALANCE</div>
+            <div className="text-[10px] text-neutral-400 mt-1 uppercase">SALDO PENDAPATAN</div>
           </div>
         </div>
       )}
@@ -879,13 +880,13 @@ function OverviewDeck({
               <div className="bg-[#F4F3EF] border-b-2 border-neutral-900 px-4 py-2.5 flex justify-between items-center font-mono">
                 <span className="text-xs font-black tracking-widest text-neutral-900 uppercase flex items-center gap-2">
                   <Layers className="w-4 h-4 text-electric-blue" />
-                  ACTIVE PIPELINE UNITS [{activeProjects.length}]
+                  PROYEK AKTIF [{activeProjects.length}]
                 </span>
                 <button
                   onClick={() => onNavigate('OPS')}
                   className="text-[10px] font-bold text-electric-blue hover:underline flex items-center gap-1"
                 >
-                  <span>OPEN FULL PIPELINE</span>
+                  <span>LIHAT SEMUA PROYEK</span>
                   <ArrowRight className="w-3 h-3" />
                 </button>
               </div>
@@ -971,7 +972,7 @@ function OverviewDeck({
                   </div>
                 </div>
 
-                <div className="text-[10px] text-neutral-500 font-bold uppercase tracking-wider">RECENT QRIS ACTIVITY</div>
+                <div className="text-[10px] text-neutral-500 font-bold uppercase tracking-wider">TRANSAKSI QRIS TERAKHIR</div>
                 <div className="space-y-1.5">
                   {(gateway?.transactions || []).slice(0, 3).map((t) => (
                     <div key={t.id} className="flex justify-between items-center p-2 border border-neutral-200 text-[11px] bg-neutral-50">
@@ -1001,20 +1002,20 @@ function OverviewDeck({
               <div className="bg-[#F4F3EF] border-b-2 border-neutral-900 px-4 py-2.5 flex justify-between items-center font-mono">
                 <span className="text-xs font-black tracking-widest text-neutral-900 uppercase flex items-center gap-2">
                   <MessageSquare className="w-4 h-4 text-neutral-800" />
-                  TACTICAL COMMS STREAM
+                  CHANNEL TIM
                 </span>
                 <button
                   onClick={() => onNavigate('CHAT')}
                   className="text-[10px] font-bold text-electric-blue hover:underline flex items-center gap-1"
                 >
-                  <span>COMMS HUB</span>
+                  <span>PESAN</span>
                   <ArrowRight className="w-3 h-3" />
                 </button>
               </div>
 
               <div className="p-4 space-y-2.5 font-mono">
                 {recentMessages.length === 0 ? (
-                  <div className="p-6 text-center text-neutral-400 text-xs">NO DISPATCH TRANSMISSIONS RECORDED.</div>
+                  <div className="p-6 text-center text-neutral-400 text-xs">Belum ada pesan.</div>
                 ) : (
                   recentMessages.map(({ msg, channelName }) => (
                     <div key={msg.id} className="border-2 border-neutral-200 p-2.5 bg-white space-y-1">
@@ -1123,9 +1124,9 @@ function TasksPage({
     <div className="p-4 md:p-6 max-w-5xl mx-auto w-full">
       <div className="flex items-center justify-between mb-4 flex-wrap gap-3">
         <div>
-          <h1 className="font-mono text-lg font-black tracking-widest uppercase text-neutral-900">TASK BOARD</h1>
+          <h1 className="font-mono text-lg font-black tracking-widest uppercase text-neutral-900">PAPAN TUGAS</h1>
           <p className="font-mono text-[11px] text-neutral-500 mt-0.5">
-            Task-first command view — semua deliverable lintas proyek dalam satu alur kerja.
+            Tampilan tugas: semua deliverable lintas proyek dalam satu alur kerja.
           </p>
         </div>
         <button
@@ -1156,7 +1157,7 @@ function TasksPage({
 }
 
 // -------------------------------------------------------------
-// TASK BOARD: task-first hybrid view (MINE / ALL / DONE)
+// PAPAN TUGAS: task-first hybrid view (MINE / ALL / DONE)
 // -------------------------------------------------------------
 function TaskBoard({
   tasks,
@@ -1366,7 +1367,7 @@ function DetailTaskOverlay({
         <div className="flex items-center justify-between p-4 border-b-2 border-neutral-900 bg-white sticky top-0 z-10">
           <div className="flex items-center gap-2 min-w-0">
             <Target className="w-4 h-4 text-electric-blue flex-shrink-0" />
-            <h3 className="font-mono text-xs font-black tracking-widest uppercase text-neutral-900 truncate">TASK DETAIL</h3>
+            <h3 className="font-mono text-xs font-black tracking-widest uppercase text-neutral-900 truncate">DETAIL TUGAS</h3>
           </div>
           <button onClick={onClose} className="text-xs font-bold text-neutral-400 hover:text-neutral-900 font-mono">
             ESC / CLOSE
@@ -1414,7 +1415,7 @@ function DetailTaskOverlay({
           {/* Approval status client (jika ada) */}
           {d.approval && (
             <div className={`border-2 p-3 ${d.approval === 'APPROVED' ? 'border-emerald-300 bg-emerald-50' : 'border-amber-300 bg-amber-50'}`}>
-              <span className="text-[8px] font-black uppercase block mb-1">STATUS CLIENT</span>
+              <span className="text-[8px] font-black uppercase block mb-1">STATUS KLIEN</span>
               <span className="text-xs font-bold">{d.approval === 'APPROVED' ? 'APPROVED OLEH CLIENT' : 'REVISI DIMINTA CLIENT'}</span>
               {d.approvalNote && <p className="text-[11px] text-neutral-600 mt-1 italic">"{d.approvalNote}"</p>}
             </div>
@@ -1442,7 +1443,7 @@ function DetailTaskOverlay({
             )}
           </button>
           {!isApproved && (
-            <p className="text-[10px] text-neutral-400 text-center font-mono">Satu aksi utama — progres proyek otomatis ter-update.</p>
+            <p className="text-[10px] text-neutral-400 text-center font-mono">Satu aksi utama, progres proyek otomatis ter-update.</p>
           )}
         </div>
       </div>
@@ -1564,7 +1565,7 @@ function GalleryManagerPanel({ onMsg }: { onMsg?: (m: string) => void }) {
         {/* Form tambah/edit */}
         <div className={`border-2 p-3 space-y-2.5 ${editing ? 'border-electric-blue bg-blue-50/40' : 'border-neutral-300 bg-neutral-50'}`}>
           <span className="font-mono text-[10px] font-black tracking-widest text-neutral-500 uppercase">
-            {editing ? `EDIT // ${editing.id}` : 'ITEM BARU'}
+            {editing ? `EDIT · ${editing.id}` : 'ITEM BARU'}
           </span>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5">
             <input value={form.id} onChange={(e) => setForm({ ...form, id: e.target.value.toUpperCase() })}
@@ -1671,7 +1672,7 @@ function EventsManagerPanel({ onMsg }: { onMsg?: (m: string) => void }) {
     });
   };
 
-  const save = async (e: React.FormEvent) => {
+  const save = async (e: FormEvent) => {
     e.preventDefault();
     if (!form.title.trim()) { setMsg('Judul event wajib diisi'); return; }
     setBusy('saving');
@@ -1729,7 +1730,7 @@ function EventsManagerPanel({ onMsg }: { onMsg?: (m: string) => void }) {
       <div className="flex items-center justify-between border-b-2 border-neutral-900 pb-3">
         <div className="flex items-center gap-2">
           <Calendar className="w-4 h-4 text-electric-blue" />
-          <h2 className="font-mono text-sm font-black tracking-tight uppercase">EVENT & ACTIVITY MANAGER</h2>
+          <h2 className="font-mono text-sm font-black tracking-tight uppercase">AGENDA & KEGIATAN</h2>
           <span className="border border-neutral-300 px-1.5 py-0.5 text-[9px] font-bold text-neutral-500">
             {eventsList.length} AGENDA
           </span>
@@ -1967,12 +1968,12 @@ function SiteOpsPanel({ user }: { user: PublicUser }) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* PAGE CONTROL */}
+        {/* KONTROL HALAMAN */}
         <section className="border-2 border-neutral-900 bg-white">
           <div className="flex items-center justify-between border-b-2 border-neutral-900 px-4 py-2.5">
             <div className="flex items-center gap-2">
               <Wrench className="w-4 h-4 text-electric-blue" />
-              <h2 className="font-mono text-xs font-black tracking-widest uppercase">PAGE CONTROL</h2>
+              <h2 className="font-mono text-xs font-black tracking-widest uppercase">KONTROL HALAMAN</h2>
             </div>
             <span className="font-mono text-[10px] text-neutral-400">STATUS + NAV</span>
           </div>
@@ -2015,18 +2016,18 @@ function SiteOpsPanel({ user }: { user: PublicUser }) {
           )}
         </section>
 
-        {/* TRAFFIC RADAR */}
+        {/* TRAFIK SITUS */}
         <section className="border-2 border-neutral-900 bg-white">
           <div className="flex items-center justify-between border-b-2 border-neutral-900 px-4 py-2.5">
             <div className="flex items-center gap-2">
               <Globe className="w-4 h-4 text-electric-blue" />
-              <h2 className="font-mono text-xs font-black tracking-widest uppercase">TRAFFIC RADAR</h2>
+              <h2 className="font-mono text-xs font-black tracking-widest uppercase">TRAFIK SITUS</h2>
             </div>
             <span className="font-mono text-[10px] text-neutral-400">VIEWS 24H / 7D / ALL</span>
           </div>
           <div className="divide-y divide-neutral-200">
             {(traffic?.pages || []).length === 0 && (
-              <div className="px-4 py-6 font-mono text-xs text-neutral-400">BELUM ADA DATA TRAFFIC — TERKUMPUL OTOMATIS SAAT PENGUNJUNG BUKA SITE.</div>
+              <div className="px-4 py-6 font-mono text-xs text-neutral-400">Belum ada data traffic. Terkumpul otomatis saat pengunjung membuka situs.</div>
             )}
             {(traffic?.pages || []).slice(0, 9).map((pg) => (
               <div key={pg.path} className="px-4 py-2">
@@ -2057,12 +2058,12 @@ function SiteOpsPanel({ user }: { user: PublicUser }) {
         </section>
       </div>
 
-      {/* LIVE VISIT FEED */}
+      {/* PENGUNJUNG TERAKHIR */}
       <section className="border-2 border-neutral-900 bg-white">
         <div className="flex items-center justify-between border-b-2 border-neutral-900 px-4 py-2.5">
           <div className="flex items-center gap-2">
             <Activity className="w-4 h-4 text-electric-blue" />
-            <h2 className="font-mono text-xs font-black tracking-widest uppercase">LIVE VISIT FEED</h2>
+            <h2 className="font-mono text-xs font-black tracking-widest uppercase">PENGUNJUNG TERAKHIR</h2>
           </div>
           <span className="font-mono text-[10px] text-neutral-400">12 TERAKHIR / 24H</span>
         </div>
@@ -2200,7 +2201,7 @@ function OpsPanel({
       <div className="flex flex-wrap items-center justify-between gap-4 border-b-2 border-neutral-900 pb-4">
         <div>
           <h1 className="text-xl font-black tracking-tight text-neutral-900 uppercase">
-            OPERATIONAL PIPELINE & PROVISIONING
+            PROYEK & PROVISIONING
           </h1>
           <p className="text-xs text-neutral-500 font-mono mt-1">
             Realtime project tracking, client milestones, and automated deliverable progress.
@@ -2222,7 +2223,7 @@ function OpsPanel({
       {showProvisionModal && (
         <form onSubmit={handleCreate} className="border-2 border-neutral-900 bg-white p-5 space-y-4 font-mono shadow-[4px_4px_0px_rgba(0,0,0,1)]">
           <div className="flex justify-between items-center border-b border-neutral-200 pb-2">
-            <span className="text-xs font-black uppercase text-electric-blue">NEW PIPELINE UNIT PROVISIONING</span>
+            <span className="text-xs font-black uppercase text-electric-blue">PROYEK BARU</span>
             <button type="button" onClick={() => setShowProvisionModal(false)} className="text-xs font-bold text-neutral-400 hover:text-neutral-900">
               CLOSE
             </button>
@@ -2549,7 +2550,7 @@ function ClientPanel({
   return (
     <div className="space-y-6 font-mono">
       <div className="border-b-2 border-neutral-900 pb-4">
-        <h1 className="text-xl font-black uppercase">CLIENT ACCESS PORTAL // DELIVERABLE REVIEW</h1>
+        <h1 className="text-xl font-black uppercase">PORTAL KLIEN · REVIEW HASIL</h1>
         <p className="text-xs text-neutral-500 mt-1">Review live deliverables, sign off completed work, or request revisions.</p>
       </div>
 
@@ -2657,7 +2658,7 @@ function AdminPanel({
     <div className="space-y-6 font-mono">
       <div className="flex justify-between items-center border-b-2 border-neutral-900 pb-4">
         <div>
-          <h1 className="text-xl font-black uppercase">INBOUND LEADS & ACCESS DIRECTORY</h1>
+          <h1 className="text-xl font-black uppercase">LEADS MASUK & DAFTAR AKSES</h1>
           <p className="text-xs text-neutral-500 mt-1">Manage marketing leads and team system directory.</p>
         </div>
 

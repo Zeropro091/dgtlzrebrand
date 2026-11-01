@@ -11,12 +11,12 @@ const PATH_STEPS = [
   {
     num: '02',
     title: 'PELOPOR',
-    desc: 'DELEGASI DGTLZ DI KOMPETISI — HACKATHON, LOMBA BISNIS PLAN, KOMPETISI TEKNOLOGI. KAMU WAKILIN NAMA DGTLZ, KUMPULIN PENGALAMAN, JEJAK, DAN KONEKSI.',
+    desc: 'DELEGASI DGTLZ DI KOMPETISI: HACKATHON, LOMBA BISNIS PLAN, KOMPETISI TEKNOLOGI. KAMU WAKILIN NAMA DGTLZ, KUMPULIN PENGALAMAN, JEJAK, DAN KONEKSI.',
   },
   {
     num: '03',
     title: 'OPERATOR',
-    desc: 'TIER TERATAS: MASUK LINGKARAN INTI — BISA LANJUT JADI EMPLOYEE DI LAB/TIM PROYEK, ATAU KAMI BANTU BANGUN VENTURE SENDIRI PAKAI INFRASTRUKTUR DGTLZ.',
+    desc: 'TIER TERATAS: MASUK LINGKARAN INTI, BISA LANJUT JADI EMPLOYEE DI LAB/TIM PROYEK, ATAU KAMI BANTU BANGUN VENTURE SENDIRI PAKAI INFRASTRUKTUR DGTLZ.',
   },
 ];
 
@@ -52,21 +52,21 @@ export function YouthPage() {
       {/* HERO */}
       <header className="grid grid-cols-1 md:grid-cols-12 border-b border-electric-blue">
         <div className="col-span-12 md:col-span-8 p-margin flex flex-col justify-end border-b md:border-b-0 md:border-r border-electric-blue min-h-[400px] md:min-h-[520px]">
-          <span className="font-label-caps mb-4">DGTLZ YOUTH — THE NEXT GENERATION</span>
+          <span className="font-label-caps mb-4">DGTLZ YOUTH · THE NEXT GENERATION</span>
           <h1 className="font-display-xl leading-none uppercase">
             TIM ANAK MUDA<br />YANG WAKILIN<br />DGTLZ.
           </h1>
           <p className="font-mono text-xs md:text-sm tracking-widest mt-6 opacity-70 max-w-xl">
-            FOKUS KAMI: LOMBA, PENGEMBANGAN KARIR & PENGALAMAN — DAN NGEMBANGKAN NAMA DGTLZ DI SETIAP PANGGUNG.
+            FOKUS KAMI: LOMBA, PENGEMBANGAN KARIR & PENGALAMAN, DAN NGEMBANGKAN NAMA DGTLZ DI SETIAP PANGGUNG.
           </p>
         </div>
         <div className="col-span-12 md:col-span-4 bg-electric-blue text-off-white flex flex-col justify-between p-gutter min-h-[300px]">
           <span className="font-label-caps">STATUS: OPEN</span>
           <div>
             <p className="font-headline-lg leading-tight">BUKAN MAGANG. INI TIM LOMBA + INKUBATOR KARIR.</p>
-            <p className="font-body-sm mt-4 opacity-80">KAMU DAPAT PANGGUNG, MENTOR, DAN TIM. DGTLZ DAPAT GENERASI BERIKUTNYA.</p>
+            <p className="font-body-sm mt-4 opacity-80">Kamu dapat panggung, mentor, dan tim. DGTLZ dapat generasi berikutnya.</p>
           </div>
-          <span className="font-label-caps opacity-60">EST. BALI // REMOTE-FIRST</span>
+          <span className="font-label-caps opacity-60">BALI · KERJA REMOTE</span>
         </div>
       </header>
 
@@ -75,7 +75,7 @@ export function YouthPage() {
         <div className="col-span-12 md:col-span-4 p-margin border-b md:border-b-0 md:border-r border-electric-blue flex flex-col justify-between min-h-[300px]">
           <span className="font-label-caps block">THE PATH</span>
           <h2 className="font-display-lg leading-none">3 TIER.<br />1 JALUR.</h2>
-          <p className="font-body-sm opacity-70 max-w-xs">DARI MEMBER SAMPAI OPERATOR — SETIAP TIER PUNYA PANGGUNG, OUTPUT, DAN AKSES NYATA.</p>
+          <p className="font-body-sm opacity-70 max-w-xs">Dari member sampai operator, setiap tier punya panggung, output, dan akses nyata.</p>
         </div>
         {PATH_STEPS.map((s, i) => (
           <div key={s.num} className={`col-span-12 md:col-span-8 p-margin border-b md:border-b-0 ${i < 2 ? 'md:border-r' : ''} border-electric-blue md:grid md:grid-cols-3`}>
@@ -107,7 +107,7 @@ export function YouthPage() {
         <div className="col-span-12 md:col-span-5 p-margin border-b md:border-b-0 md:border-r border-electric-blue flex flex-col justify-between min-h-[400px]">
           <div>
             <h2 className="font-display-lg leading-none uppercase">GABUNG<br />YOUTH</h2>
-            <p className="font-body-sm mt-6 max-w-sm">ISI FORM. KAMI REVIEW SEMUA APLIKASI & BALAS VIA EMAIL. PENGALAMAN LOMBA / PORTFOLIO / AKUN SOSIAL KAMU SANGAT DISARANKAN.</p>
+            <p className="font-body-sm mt-6 max-w-sm">Isi form. Kami review semua aplikasi dan balas via email. Pengalaman lomba, portfolio, atau akun sosial kamu sangat DISARANKAN.</p>
           </div>
           <Link to="/" className="font-label-caps text-electric-blue hover:opacity-60 transition-opacity">← BACK TO MAIN</Link>
         </div>

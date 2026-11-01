@@ -38,6 +38,7 @@ export default defineConfig(() => {
           // Allow access via ngrok public tunnel(s).
           allowedHosts: [
             'agriculturally-uncambered-ngoc.ngrok-free.dev',
+            '.ngrok-free.dev',
             '.ngrok-free.app',
             '.ngrok.app',
             '.ngrok.io',

@@ -40,11 +40,11 @@ export function CrewToolsPanel() {
       <div className="flex flex-wrap items-end justify-between gap-4 border-b-2 border-neutral-900 pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="bg-neutral-900 text-white px-2 py-0.5 text-xs font-black">CREW // UTILITIES</span>
+            <span className="bg-neutral-900 text-white px-2 py-0.5 text-xs font-black">TOOLS TIM</span>
             <span className="text-xs text-electric-blue font-bold">V1.0</span>
           </div>
           <h1 className="text-2xl font-black tracking-tighter mt-1">CREW TOOLS & AUTOMATION</h1>
-          <p className="text-xs text-neutral-500">Perakas kerja internal tim DGTLZ — Transkripsi Rapat Live & Kalkulator Token Route.</p>
+          <p className="text-xs text-neutral-500">Perakas kerja internal tim DGTLZ: transkripsi Rapat Live & Kalkulator Token Route.</p>
         </div>
 
         {/* SUB TAB SWITCHER */}
@@ -252,7 +252,7 @@ function TranskripRapatTool() {
   const handleDownload = () => {
     if (segments.length === 0) return;
     const d = new Date();
-    const head = `TRANSKRIP RAPAT // DGTLZ CREW
+    const head = `TRANSKRIP RAPAT DGTLZ CREW
 Tanggal: ${d.toLocaleDateString('id-ID')}
 Durasi : ${formatDuration(totalMs)}
 Bahasa : ${lang === 'id-ID' ? 'Indonesia' : 'English (US)'}
@@ -402,7 +402,7 @@ Bahasa : ${lang === 'id-ID' ? 'Indonesia' : 'English (US)'}
               <Clock className="w-3.5 h-3.5" /> {formatDuration(totalMs)}
             </span>
             <span>
-              {wordCount} KATA // {segments.length} BARIS
+              {wordCount} KATA · {segments.length} BARIS
             </span>
           </div>
         </div>
@@ -515,7 +515,7 @@ function RouteCostCalculatorTool() {
       <div className="border-2 border-neutral-900 bg-white p-4 space-y-4">
         <div className="flex items-center gap-2 border-b-2 border-neutral-900 pb-2">
           <Calculator className="w-4 h-4 text-electric-blue" />
-          <h2 className="font-bold text-xs uppercase tracking-wider">ROUTE PAY-AS-YOU-GO ESTIMATOR</h2>
+          <h2 className="font-bold text-xs uppercase tracking-wider">ESTIMATOR BIAYA ROUTE</h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">

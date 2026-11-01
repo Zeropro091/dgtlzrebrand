@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
+﻿@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -15,15 +15,15 @@
   --font-serif: "Playfair Display", "Bodoni Moda", Didot, serif;
   --font-mono: "JetBrains Mono", monospace;
 
-  --text-display-xl: clamp(60px, 8vw, 120px);
-  --text-display-xl--line-height: clamp(54px, 8vw, 110px);
-  --text-display-xl--letter-spacing: -0.04em;
-  
-  --text-display-lg: clamp(48px, 6vw, 100px);
-  --text-display-lg--line-height: clamp(44px, 6vw, 90px);
-  
-  --text-display-md: clamp(40px, 5vw, 80px);
-  --text-display-md--line-height: clamp(36px, 5vw, 72px);
+  --text-display-xl: clamp(44px, 5.4vw, 88px);
+  --text-display-xl--line-height: clamp(42px, 5vw, 84px);
+  --text-display-xl--letter-spacing: -0.035em;
+
+  --text-display-lg: clamp(38px, 4.4vw, 68px);
+  --text-display-lg--line-height: clamp(36px, 4.2vw, 64px);
+
+  --text-display-md: clamp(30px, 3.4vw, 52px);
+  --text-display-md--line-height: clamp(28px, 3.2vw, 50px);
 
   --text-headline-lg: clamp(32px, 4vw, 64px);
   --text-headline-lg--line-height: clamp(36px, 4.5vw, 72px);
@@ -190,6 +190,301 @@
     scrollbar-width: none;
 }
 
+/* Shared motion utilities: reveal, typewriter, marquee, glitch, scanlines. */
+
+/* Volume meter bars. */
+.eq-bar {
+    height: 2px;
+    animation: eq-bounce 0.9s ease-in-out infinite alternate;
+    transform-origin: bottom;
+}
+@keyframes eq-bounce {
+    0%   { height: 2px; opacity: 0.55; }
+    50%  { height: 10px; opacity: 1; }
+    100% { height: 4px; opacity: 0.8; }
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll var(--marquee-duration, 32s) linear infinite;
+}
+.marquee-track:hover {
+    animation-play-state: paused;
+}
+.marquee-reverse {
+    animation-direction: reverse;
+}
+@keyframes marquee-scroll {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
+}
+
+/* Chromatic glitch â€” jump-cut RGB split. Apply on hover via .glitch-hover,
+   or permanently with .glitch. Kept very short so it reads as a machine,
+   not a toy. */
+.glitch {
+    position: relative;
+    display: inline-block;
+}
+.glitch::before,
+.glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0;
+}
+.glitch::before { color: #ff3b30; mix-blend-mode: screen; }
+.glitch::after  { color: #00ffe1; mix-blend-mode: screen; }
+
+.glitch-hover:hover::before,
+.glitch-hover:hover::after,
+.glitch.glitch-active::before,
+.glitch.glitch-active::after {
+    animation: glitch-slice 0.42s steps(2, end) 1;
+}
+.glitch-hover:hover::before,
+.glitch.glitch-active::before {
+    animation-name: glitch-slice-a;
+}
+@keyframes glitch-slice-a {
+    0%, 100% { opacity: 0; transform: translate(0, 0); }
+    20%      { opacity: 0.85; transform: translate(-2px, -1px); }
+    40%      { opacity: 0.6;  transform: translate(2px, 1px); }
+    60%      { opacity: 0.85; transform: translate(-1px, 1px); }
+    80%      { opacity: 0.4;  transform: translate(1px, -1px); }
+}
+.glitch-hover:hover::after,
+.glitch.glitch-active::after {
+    animation-name: glitch-slice-b;
+}
+@keyframes glitch-slice-b {
+    0%, 100% { opacity: 0; transform: translate(0, 0); }
+    20%      { opacity: 0.7; transform: translate(2px, 1px); }
+    40%      { opacity: 0.5; transform: translate(-2px, -1px); }
+    60%      { opacity: 0.7; transform: translate(1px, -1px); }
+    80%      { opacity: 0.35; transform: translate(-1px, 1px); }
+}
+
+/* CRT scanline overlay. Apply to a positioned container. */
+.scanlines::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(11, 23, 239, 0.055) 0px,
+        rgba(11, 23, 239, 0.055) 1px,
+        transparent 1px,
+        transparent 3px
+    );
+    z-index: 2;
+}
+
+/* Slow downward drift of a scan bar â€” the "monitor is alive" cue */
+.scanbeam::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 28%;
+    pointer-events: none;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(11, 23, 239, 0.09),
+        transparent
+    );
+    animation: scanbeam-travel 6.5s linear infinite;
+    z-index: 2;
+}
+@keyframes scanbeam-travel {
+    from { transform: translateY(-40%); }
+    to   { transform: translateY(400%); }
+}
+
+/* Underline that draws itself left-to-right on hover */
+.draw-underline {
+    position: relative;
+}
+.draw-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.draw-underline:hover::after,
+.draw-underline.is-active::after {
+    transform: scaleX(1);
+}
+
+
+.hard-blink {
+    animation: hard-blink 1.1s steps(1, end) infinite;
+}
+@keyframes hard-blink {
+    0%, 45%  { opacity: 1; }
+    50%, 95% { opacity: 0.15; }
+    100%     { opacity: 1; }
+}
+
+.float-slow {
+    animation: float-slow 7s ease-in-out infinite;
+}
+@keyframes float-slow {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+}
+
+/* Diagonal stripe wipe â€” brutalist "loading" texture */
+.stripes {
+    background-image: repeating-linear-gradient(
+        45deg,
+        currentColor 0,
+        currentColor 1px,
+        transparent 1px,
+        transparent 7px
+    );
+    background-size: 200% 200%;
+    animation: stripes-slide 2.4s linear infinite;
+    opacity: 0.25;
+}
+@keyframes stripes-slide {
+    from { background-position: 0 0; }
+    to   { background-position: 14px 14px; }
+}
+
+/* Square ripple thrown from the pointer on press. See Pressable.tsx. */
+@keyframes ripple-square {
+    0%   { transform: scale(0);   opacity: 0.45; }
+    100% { transform: scale(26);  opacity: 0; }
+}
+
+/* Specular highlight that follows the pointer across a tilted card.
+   Driven by --mx / --my set in Tilt3D.tsx. */
+.tilt-shine {
+    position: relative;
+}
+.tilt-shine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+        220px circle at var(--mx, 50%) var(--my, 50%),
+        rgba(11, 23, 239, 0.16),
+        transparent 65%
+    );
+    opacity: 0;
+    transition: opacity 0.28s ease;
+    z-index: 3;
+}
+.tilt-shine:hover::after {
+    opacity: 1;
+}
+
+/* Nav link that grows a block behind it on hover — the brutalist "fill". */
+.nav-fill {
+    position: relative;
+    isolation: isolate;
+}
+.nav-fill::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: currentColor;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: -1;
+}
+.nav-fill:hover::before {
+    transform: scaleY(1);
+}
+.nav-fill:hover {
+    color: var(--color-electric-blue);
+}
+.nav-fill:hover::before {
+    background: var(--color-on-primary);
+}
+
+.sweep-border {
+    position: relative;
+}
+.sweep-border::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 2px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sweep-border:hover::after {
+    transform: scaleX(1);
+}
+
+/* Modal / sheet entrance. Paired with AnimatePresence for the exit. */
+@keyframes panel-in {
+    from { opacity: 0; transform: translateY(18px) scale(0.985); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Accordion body reveal — grid-rows trick avoids JS height measurement. */
+.accordion-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.34s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.accordion-body[data-open="true"] {
+    grid-template-rows: 1fr;
+}
+.accordion-body > div {
+    overflow: hidden;
+}
+
+.focus-machine:focus-visible {
+    outline: 2px solid var(--color-electric-blue);
+    outline-offset: 2px;
+}
+.focus-machine:focus-visible:not(:focus-visible) {
+    outline: none;
+}
+
+/* Accessibility: kill every decorative animation for users who asked for less. */
+@media (prefers-reduced-motion: reduce) {
+    .eq-bar,
+    .marquee-track,
+    .scanbeam::before,
+    .float-slow,
+    .stripes,
+    .terminal-cursor,
+    .hard-blink {
+        animation: none !important;
+    }
+    .glitch-hover:hover::before,
+    .glitch-hover:hover::after {
+        animation: none !important;
+    }
+    .accordion-body {
+        transition: none;
+    }
+    html {
+        scroll-behavior: auto;
+    }
+}
+
 html {
     scroll-behavior: smooth;
 }
@@ -198,4 +493,24 @@ body {
     background-color: var(--color-off-white);
     color: var(--color-electric-blue);
     font-family: var(--font-mono);
+}
+
+/* Cap the content column so it stays readable on ultrawide monitors,
+   while remaining full-bleed on normal desktop widths. */
+.site-shell {
+    width: 100%;
+    max-width: 1800px;
+    margin-inline: auto;
+}
+
+@media (min-width: 1801px) {
+    .site-shell {
+        border-inline: 1px solid var(--color-electric-blue);
+    }
+}
+
+/* Chrome/Safari focus ring for keyboard users only. */
+:focus-visible {
+    outline: 2px solid var(--color-electric-blue);
+    outline-offset: 2px;
 }

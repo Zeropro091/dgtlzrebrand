@@ -31,7 +31,7 @@ export function AuthPage({ mode }: { mode: 'login' | 'register' }) {
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-[#F4F3EF] px-4">
       <div className="w-full max-w-md border-2 border-neutral-900 bg-white">
         <div className="bg-electric-blue text-white px-5 py-3 font-mono text-[11px] tracking-widest flex justify-between">
-          <span>DGTLZ // COMMAND DECK</span>
+          <span>DGT.LZ · AREA KLIEN</span>
           <span>{mode === 'login' ? 'AUTH.LOGIN' : 'AUTH.REGISTER'}</span>
         </div>
         <form onSubmit={submit} className="p-6 space-y-4">

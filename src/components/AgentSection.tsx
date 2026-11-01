@@ -1,10 +1,12 @@
+import { useSound } from '../lib/useSound';
+
 // DGTLZ AGENT — deploy-ready business agents (Hermes Agent, OpenClaw, custom builds).
 // Dark theme matches the DGT.LZ-AGENT arsenal module (bg-[#121212] text-[#39FF14]).
 const AGENTS = [
   {
     engine: 'HERMES AGENT',
     badge: 'AUTONOMOUS OPERATOR',
-    desc: 'Agent otonom full-stack: orchestrasi tools, jalanin workflow, kelola data, dan eksekusi keputusan operasional. Otak di balik Command Deck — sekarang bisa kerja untuk bisnis kamu.',
+    desc: 'Agent otonom full-stack: orchestrasi tools, jalanin workflow, kelola data, dan eksekusi keputusan operasional. Otak di balik Command Deck, sekarang bisa kerja untuk bisnis kamu.',
     uses: ['Kelola inbox & follow-up lead otomatis', 'Orchestrasikan seluruh ecosystem (web app, PayGate, chat)', 'Laporan harian & monitoring ke Telegram'],
     deploy: '1-2 MINGGU',
   },
@@ -18,24 +20,26 @@ const AGENTS = [
   {
     engine: 'CUSTOM BUILD',
     badge: 'TAILOR-MADE',
-    desc: 'Agent yang dirancang khusus untuk alur kerja unik bisnis kamu: booking bot, sales agent, agent keuangan, internal ops — dibangun di atas engine yang paling pas.',
+    desc: 'Agent yang dirancang khusus untuk alur kerja unik bisnis kamu: booking bot, sales agent, agent keuangan, internal ops, dibangun di atas engine yang paling pas.',
     uses: ['Booking & appointment otomatis via WhatsApp', 'Sales agent: dari chat pertama sampai invoice', 'Internal ops: data entry, rekap, reminder'],
     deploy: '2-4 MINGGU',
   },
 ];
 
 export function AgentSection() {
+  const { play } = useSound();
+
   return (
     <section id="agent" className="border-b border-electric-blue bg-[#121212] text-white">
       <div className="p-margin border-b border-[#39FF14]/30 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <span className="font-label-caps block text-[#39FF14] mb-2">DGTLZ AGENT // DEPLOY ON DEMAND</span>
+          <span className="font-label-caps block text-[#39FF14] mb-2">AI AGENT UNTUK BISNIS</span>
           <h2 className="font-display-lg leading-none uppercase">
             BISNIS KAMU,<br />DIJALANKAN AGENT<span className="text-[#39FF14]">.</span>
           </h2>
         </div>
         <p className="font-body-sm opacity-80 max-w-sm">
-          Kami deploy AI agent siap pakai ke dalam ecosystem bisnis kamu — dari layani pelanggan sampai jalanin operasional. Pilih engine-nya, kami yang pasang, latih, dan rawat.
+          Kami deploy AI agent siap pakai ke dalam ecosystem bisnis kamu: dari layani pelanggan sampai jalanin operasional. Pilih engine-nya, kami yang pasang, latih, dan rawat.
         </p>
       </div>
 

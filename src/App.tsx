@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from 'react';
+﻿import { useEffect, useRef, useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { Home } from './pages/Home';
@@ -15,6 +16,7 @@ import { Dashboard } from './pages/Dashboard';
 import { RampungPage } from './pages/RampungPage';
 import { YouthPage } from './pages/YouthPage';
 import { siteOps } from './lib/deckApi';
+import { SoundProvider } from './lib/useSound';
 import { Construction } from 'lucide-react';
 
 function sessionKey() {
@@ -82,32 +84,57 @@ function SiteController({ children }: { children: import('react').ReactNode }) {
   return <>{children}</>;
 }
 
+function PageTransition({ children }: { children: import('react').ReactNode }) {
+  const location = useLocation();
+  const reduceMotion = useReducedMotion();
+
+  if (reduceMotion) return <>{children}</>;
+
+  return (
+    <AnimatePresence mode="wait" initial={false}>
+      <motion.div
+        key={location.pathname}
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -6 }}
+        transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+      >
+        {children}
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
-      <SiteController>
-        <div className="min-h-screen selection:bg-electric-blue selection:text-white flex flex-col">
-          <Navbar />
-          <main className="pt-16 flex-grow">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/route" element={<DgtlzRoute />} />
-              <Route path="/paygate" element={<DgtlzPaygate />} />
-              <Route path="/agent" element={<AgentPage />} />
-              <Route path="/gallery" element={<Gallery />} />
-              <Route path="/partners" element={<Partners />} />
-              <Route path="/systems" element={<Systems />} />
-              <Route path="/systems/:slug" element={<ModulePage />} />
-              <Route path="/login" element={<AuthPage mode="login" />} />
-              <Route path="/register" element={<AuthPage mode="register" />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/rampung" element={<RampungPage />} />
-              <Route path="/youth" element={<YouthPage />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </SiteController>
+      <SoundProvider>
+        <SiteController>
+          <div className="min-h-screen selection:bg-electric-blue selection:text-white flex flex-col site-shell">
+            <Navbar />
+            <main className="pt-16 flex-grow">
+              <PageTransition>
+                <Routes>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/route" element={<DgtlzRoute />} />
+                  <Route path="/paygate" element={<DgtlzPaygate />} />
+                  <Route path="/agent" element={<AgentPage />} />
+                  <Route path="/gallery" element={<Gallery />} />
+                  <Route path="/partners" element={<Partners />} />
+                  <Route path="/systems" element={<Systems />} />
+                  <Route path="/systems/:slug" element={<ModulePage />} />
+                  <Route path="/login" element={<AuthPage mode="login" />} />
+                  <Route path="/register" element={<AuthPage mode="register" />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/rampung" element={<RampungPage />} />
+                  <Route path="/youth" element={<YouthPage />} />
+                </Routes>
+              </PageTransition>
+            </main>
+            <Footer />
+          </div>
+        </SiteController>
+      </SoundProvider>
     </BrowserRouter>
   );
 }

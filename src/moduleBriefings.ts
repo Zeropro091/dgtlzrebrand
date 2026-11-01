@@ -12,7 +12,7 @@ export const moduleBriefings: ModuleBriefing[] = [
     slug: 'ops',
     headline: 'THE OPERATING CORE',
     briefing:
-      'Modul yang mengorkestrasi seluruh operasi DGT.LZ — dari SOP, penjadwalan, hingga delegasi tugas lintas tim. Semua modul lain lapor dan dieksekusi dari sini.',
+      'Modul yang mengorkestrasi seluruh operasi DGT.LZ, dari SOP, penjadwalan, hingga delegasi tugas lintas tim. Semua modul lain lapor dan dieksekusi dari sini.',
     tactical: 'TACTICAL ROLE // Koordinasi lintas modul, SOP & pipeline eksekusi harian.',
     accent: '#0B17EF',
   },
@@ -28,7 +28,7 @@ export const moduleBriefings: ModuleBriefing[] = [
     slug: 'agent',
     headline: 'THE SWARM',
     briefing:
-      'Armada multi-agent otonom yang mengeksekusi tugas kognitif — riset, drafting, klasifikasi, keputusan — tanpa menunggu manusia. Setiap agent punya satu job dan satu standar output.',
+      'Armada multi-agent otonom yang mengeksekusi tugas kognitif, riset, drafting, klasifikasi, keputusan, tanpa menunggu manusia. Setiap agent punya satu job dan satu standar output.',
     tactical: 'TACTICAL ROLE // Agent otonom, orkestrasi task kognitif & self-execution.',
     accent: '#39FF14',
   },
@@ -60,7 +60,7 @@ export const moduleBriefings: ModuleBriefing[] = [
     slug: 'voice',
     headline: 'THE MOUTHPIECE',
     briefing:
-      'Agen suara: telephony, voice bot, dan sistem percakapan otomatis yang bisa ngobrol dengan klien 24/7 — booking, follow-up, dan kualifikasi tanpa jeda.',
+      'Agen suara: telephony, voice bot, dan sistem percakapan otomatis yang bisa ngobrol dengan klien 24/7, booking, follow-up, dan kualifikasi tanpa jeda.',
     tactical: 'TACTICAL ROLE // Voice agents, telephony & percakapan otomatis.',
     accent: '#00d2ff',
   },
@@ -76,7 +76,7 @@ export const moduleBriefings: ModuleBriefing[] = [
     slug: 'fin',
     headline: 'THE LEDGER',
     briefing:
-      'Saraf keuangan: OCR dokumen, pencatatan transaksi, dan administrasi otomatis. Invoice masuk, data tercatat, laporan keluar — tanpa entri manual.',
+      'Saraf keuangan: OCR dokumen, pencatatan transaksi, dan administrasi otomatis. Invoice masuk, data tercatat, laporan keluar, tanpa entri manual.',
     tactical: 'TACTICAL ROLE // Financial ops, document OCR & administrasi otomatis.',
     accent: '#10b981',
   },

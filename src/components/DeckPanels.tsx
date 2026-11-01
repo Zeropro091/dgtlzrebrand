@@ -126,7 +126,7 @@ export function ChatPanel({ me, projects }: { me: PublicUser; projects: Project[
 
   return (
     <Panel
-      title="TACTICAL COMMS // REAL-TIME CHANNEL"
+      title="CHANNEL TIM · REAL-TIME"
       subtitle="Encrypted team broadcasts, operational alerts, and project discussion streams."
       icon={MessageSquare}
     >
@@ -273,7 +273,7 @@ export function TeamPanel({ me, projects, onMutate }: { me: PublicUser; projects
 
   return (
     <Panel
-      title="SQUAD CAPACITY // CREW DISPATCH"
+      title="KAPASITAS TIM"
       subtitle="Member allocation, project load factoring, and team availability."
       icon={Users}
     >
@@ -319,7 +319,7 @@ export function TeamPanel({ me, projects, onMutate }: { me: PublicUser; projects
             disabled={busy || !selectedUser || !selectedProject}
             className="border-2 border-neutral-900 bg-neutral-900 text-white font-mono text-xs font-bold px-5 py-2.5 hover:bg-electric-blue hover:border-electric-blue disabled:opacity-40 transition-colors"
           >
-            DISPATCH TO PROJECT
+            TUGASKAN KE PROYEK
           </button>
         </form>
 
@@ -414,7 +414,7 @@ export function FinancePanel({ projects }: { projects: Project[] }) {
 
   return (
     <Panel
-      title="FINANCIAL LEDGER // CASH FLOW CORE"
+      title="KEUANGAN & ARUS KAS"
       subtitle="Real-time revenue recognition, expense tracking, and contract profit margins."
       icon={Wallet}
     >
@@ -547,7 +547,7 @@ export function FinancePanel({ projects }: { projects: Project[] }) {
               {(data?.transactions || []).length === 0 ? (
                 <tr>
                   <td colSpan={5} className="p-8 text-center text-neutral-400">
-                    NO TRANSACTIONS LOGGED IN LEDGER.
+                    Belum ada transaksi.
                   </td>
                 </tr>
               ) : (
@@ -630,7 +630,7 @@ export function GatewayPanel() {
 
   return (
     <Panel
-      title="PAYGATE CORE // INSTANT QRIS SETTLEMENT"
+      title="PAYGATE · SETTLEMENT QRIS"
       subtitle="White-label dynamic QRIS generator, merchant routing, and webhook telemetry."
       icon={QrCode}
     >
@@ -753,7 +753,7 @@ export function GatewayPanel() {
               {(data?.transactions || []).length === 0 ? (
                 <tr>
                   <td colSpan={6} className="p-8 text-center text-neutral-400">
-                    NO GATEWAY TRANSACTIONS RECORDED.
+                    Belum ada transaksi gateway.
                   </td>
                 </tr>
               ) : (
@@ -927,7 +927,7 @@ export function SettingsPanel({ me }: { me: PublicUser }) {
       {/* Telegram Dispatch Bot */}
       {me.role === 'owner' && (
         <Panel
-          title="TELEGRAM TELEMETRY DISPATCH"
+          title="NOTIFIKASI TELEGRAM"
           subtitle="Real-time alert relay for inbound leads, approvals, and daily briefs."
           icon={Bot}
         >
