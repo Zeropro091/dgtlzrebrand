@@ -19,6 +19,25 @@ export function ArtStripSection() {
 
   return (
     <section id="art-strip" className="border-b border-[#39FF14]/30 bg-[#121212] text-white">
+      {/* Pixel dissolve band — putih dari CARA KERJA "bocor" jadi piksel ke arsip gelap */}
+      <div aria-hidden="true" className="w-full overflow-hidden">
+        {[0.25, 0.5, 0.75, 1].map((d, i) => (
+          <div
+            key={i}
+            className="h-6 w-full"
+            style={{
+              backgroundColor: '#ffffff',
+              backgroundImage:
+                d >= 1
+                  ? 'linear-gradient(#121212, #121212)'
+                  : `conic-gradient(rgba(18,18,18,${d}) 0 25%, transparent 25% 50%, rgba(18,18,18,${d}) 50% 75%, transparent 75% 100%)`,
+              backgroundSize: d >= 1 ? 'auto' : '12px 12px',
+              backgroundPosition: i % 2 ? '6px 0' : '0 0',
+            }}
+          />
+        ))}
+      </div>
+
       {/* Header bar — mirrors AgentSection header pattern */}
       <div className="p-margin border-b border-[#39FF14]/30 flex items-end justify-between gap-4">
         <span className="font-label-caps block text-[#39FF14]">ARSIP VISUAL</span>
