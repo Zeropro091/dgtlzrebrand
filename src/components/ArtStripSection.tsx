@@ -2,10 +2,10 @@ import { useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 
 // Art strip — theme matches AI AGENT UNTUK BISNIS (AgentSection):
-// dark #121212 canvas, terminal-green #39FF14 accents, mono labels.
+// dark #121212 canvas, monochrome white/grey accents, mono labels.
 
 // Pixel canvas: putih → #121212 dissolve pakai per-pixel dither (Bayer 4x4),
-// piksel dekat cursor "menyala" hijau terminal. Canvas = satu elemen, murah.
+// piksel dekat cursor "menyala" putih. Canvas = satu elemen, murah.
 const PX = 4; // ukuran piksel
 const BAYER = [
   [15, 8, 11, 2],
