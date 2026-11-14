@@ -17,12 +17,12 @@ export default defineConfig(() => {
       host: true,
       proxy: {
         '/api': {
-          target: 'http://localhost:4000',
+          target: `http://localhost:${process.env.API_PORT || 4000}`,
           changeOrigin: true,
         },
       },
           // HMR is disabled in AI Studio via DISABLE_HMR env var.
-          // Do not modifyâfile watching is disabled to prevent flickering during agent edits.
+          // Do not modify - file watching is disabled to prevent flickering during agent edits.
           hmr: process.env.DISABLE_HMR !== 'true',
           // Disable file watching when DISABLE_HMR is true to save CPU during agent edits.
           watch: process.env.DISABLE_HMR === 'true'
@@ -38,7 +38,7 @@ export default defineConfig(() => {
                   '**/.git/**',
                 ],
               },
-          // Allow access via ngrok public tunnel(s).
+          // Allow access via ngrok / cloudflare tunnels and LAN+Tailscale devices.
           allowedHosts: [
             'agriculturally-uncambered-ngoc.ngrok-free.dev',
             '.ngrok-free.dev',
@@ -48,6 +48,9 @@ export default defineConfig(() => {
             '.ngrok.com',
             // Cloudflare quick tunnels (cloudflared --url)
             '.trycloudflare.com',
+            // Cloudflare Tunnel (dgtlz.my.id)
+            'dgtlz.my.id',
+            '.dgtlz.my.id',
             // Local network + Tailscale access from phones/tablets
             '192.168.93.177',
             '100.119.128.12',
