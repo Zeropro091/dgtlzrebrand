@@ -23,7 +23,26 @@ export type Project = {
 
 type ApiOptions = { method?: string; body?: unknown };
 
+// Endpoint yang sudah terbukti 404 di backend ini tidak diulang tiap page load.
+// Tanpa ini setiap kunjungan menembak /api/site/config & /api/analytics/pageview
+// dan mengotori console + network tab dengan 404/500.
+const missing = new Set<string>();
+const MISSING_KEY = 'dgtlz_api_missing';
+
+function loadMissing(): void {
+  try {
+    const raw = sessionStorage.getItem(MISSING_KEY);
+    if (raw) (JSON.parse(raw) as string[]).forEach((p) => missing.add(p));
+  } catch { /* ignore */ }
+}
+function markMissing(path: string): void {
+  missing.add(path);
+  try { sessionStorage.setItem(MISSING_KEY, JSON.stringify([...missing])); } catch { /* ignore */ }
+}
+loadMissing();
+
 async function api<T>(path: string, { method = 'GET', body }: ApiOptions = {}): Promise<T> {
+  if (missing.has(path)) throw new Error('Endpoint tidak tersedia');
   const headers: Record<string, string> = { 'Content-Type': 'application/json' };
   const token = getToken();
   if (token) headers['Authorization'] = `Bearer ${token}`;
@@ -33,7 +52,10 @@ async function api<T>(path: string, { method = 'GET', body }: ApiOptions = {}): 
     body: body !== undefined ? JSON.stringify(body) : undefined,
   });
   const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error((data as { error?: string }).error || `HTTP ${res.status}`);
+  if (!res.ok) {
+    if (res.status === 404) markMissing(path);
+    throw new Error((data as { error?: string }).error || `HTTP ${res.status}`);
+  }
   return data as T;
 }
 
