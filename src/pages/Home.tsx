@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from 'motion/react'
 import { TeamSection } from '../components/TeamSection';
 import { ServicesSection } from '../components/ServicesSection';
 import { WorkSection } from '../components/WorkSection';
+import { ArtStripSection } from '../components/ArtStripSection';
 import { WorkflowSection } from '../components/WorkflowSection';
 import { LabSection } from '../components/LabSection';
 import { YouthSection } from '../components/YouthSection';
@@ -181,6 +182,9 @@ export function Home() {
       </Reveal>
       <Reveal sound>
         <WorkflowSection />
+      </Reveal>
+      <Reveal sound>
+        <ArtStripSection />
       </Reveal>
       <Reveal sound>
         <AgentSection />
