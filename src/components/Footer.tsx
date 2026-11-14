@@ -14,8 +14,8 @@ export function Footer() {
         <a className="inline-flex items-center min-h-[24px] opacity-70 hover:opacity-100 transition-opacity" href="/agent#faq">SHIPPING</a>
         <a className="inline-flex items-center min-h-[24px] opacity-70 hover:opacity-100 transition-opacity" href="https://wa.me/6281237729115" target="_blank" rel="noopener noreferrer">CONTACT</a>
         <a className="inline-flex items-center min-h-[24px] opacity-70 hover:opacity-100 transition-opacity" href="https://www.instagram.com/dgt_lz/" target="_blank" rel="noopener noreferrer">DGT INSTAGRAM</a>
-        <a className="opacity-70 hover:opacity-100 transition-opacity" href="https://www.instagram.com/madzilla3dprint.bali/" target="_blank" rel="noopener noreferrer">MADZILLA INSTAGRAM</a>
-        <a className="opacity-70 hover:opacity-100 transition-opacity" href="/login">DECK LOGIN</a>
+        <a className="inline-flex items-center min-h-[24px] opacity-70 hover:opacity-100 transition-opacity" href="https://www.instagram.com/madzilla3dprint.bali/" target="_blank" rel="noopener noreferrer">MADZILLA INSTAGRAM</a>
+        <a className="inline-flex items-center min-h-[24px] opacity-70 hover:opacity-100 transition-opacity" href="/login">DECK LOGIN</a>
       </div>
       <div className="text-[10px] opacity-60 text-center md:text-right font-body-sm">
         © 2024 DGT ARCHITECTURAL ARTIFACTS. ALL RIGHTS RESERVED.
