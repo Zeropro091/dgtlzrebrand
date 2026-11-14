@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 
 // Art strip — theme matches AI AGENT UNTUK BISNIS (AgentSection):
@@ -17,7 +17,7 @@ const BAYER = [
 function DitherBand() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const mouse = useRef<{ x: number; y: number } | null>(null);
-  const [hover, setHover] = useState(false);
+  const hoverRef = useRef(false);
 
   useEffect(() => {
     const cv = canvasRef.current;
@@ -61,7 +61,7 @@ function DitherBand() {
           const b = BAYER[ry & 3][cx & 3] / 16;
           const on = eased > b;
           let glow = 0;
-          if (animate && hover && m) {
+          if (animate && hoverRef.current && m) {
             const dx = cx * PX + PX / 2 - mx;
             const dy = ry * PX + PX / 2 - my;
             const dist = Math.hypot(dx, dy);
@@ -106,12 +106,24 @@ function DitherBand() {
     const io = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
       if (!visible) stop();
-      else if (!hover) paint(false);
+      else if (!hoverRef.current) paint(false);
     }, { threshold: 0.01 });
     io.observe(cv);
 
-    if (hover && visible) start();
-    else paint(false);
+    // hover masuk/keluar ditangani di sini (bukan state React) supaya tidak stale closure
+    const onEnter = () => {
+      hoverRef.current = true;
+      if (visible) start();
+    };
+    const onLeave = () => {
+      hoverRef.current = false;
+      mouse.current = null;
+      stop();
+    };
+    parent.addEventListener('pointerenter', onEnter);
+    parent.addEventListener('pointerleave', onLeave);
+
+    paint(false);
 
     const onResize = () => paint(false);
     window.addEventListener('resize', onResize);
@@ -121,18 +133,15 @@ function DitherBand() {
       io.disconnect();
       window.removeEventListener('resize', onResize);
       parent.removeEventListener('pointermove', onMove);
+      parent.removeEventListener('pointerenter', onEnter);
+      parent.removeEventListener('pointerleave', onLeave);
     };
-  }, [hover]);
+  }, []);
 
   return (
     <div
       aria-hidden="true"
       className="relative w-full h-[128px] overflow-hidden cursor-crosshair"
-      onPointerEnter={() => setHover(true)}
-      onPointerLeave={() => {
-        setHover(false);
-        mouse.current = null;
-      }}
     >
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
     </div>
@@ -179,7 +188,7 @@ export function ArtStripSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="relative aspect-[4/3] overflow-hidden">
+            <div className="relative aspect-square overflow-hidden">
               <img
                 src={art.src}
                 alt={art.label}
