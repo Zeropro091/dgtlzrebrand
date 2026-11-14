@@ -30,11 +30,11 @@ function DitherBand() {
     let t = 0;
     let cols = 0;
     let rows = 0;
-    let offTop = 0;
-
+    let visible = false;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    const draw = () => {
+    // Satu frame statis: dither gradient tanpa animasi. Dipakai saat idle.
+    const paint = (animate: boolean) => {
       const rect = cv.getBoundingClientRect();
       const w = Math.max(1, Math.floor(rect.width));
       const H = Math.max(1, Math.floor(rect.height));
@@ -47,30 +47,26 @@ function DitherBand() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, w, H);
-      t += reduce ? 0 : 0.016;
 
       const m = mouse.current;
-      // koordinat mouse relatif canvas
+      // koordinat mouse relatif canvas (rect sudah viewport-relative)
       const mx = m ? m.x - rect.left : -1e4;
-      const my = m ? m.y - rect.top + offTop : -1e4;
+      const my = m ? m.y - rect.top : -1e4;
 
+      // batch per warna supaya fillRect tidak diganti style tiap piksel
       for (let ry = 0; ry < rows; ry++) {
-        // progress vertikal 0 (atas, putih) → 1 (bawah, gelap), smoothstep
         const p = ry / Math.max(1, rows - 1);
         const eased = p * p * (3 - 2 * p);
         for (let cx = 0; cx < cols; cx++) {
           const b = BAYER[ry & 3][cx & 3] / 16;
           const on = eased > b;
-          // interaksi cursor: radius 90px dari kursor
           let glow = 0;
-          if (hover && m) {
+          if (animate && hover && m) {
             const dx = cx * PX + PX / 2 - mx;
             const dy = ry * PX + PX / 2 - my;
             const dist = Math.hypot(dx, dy);
             if (dist < 90) {
-              glow = 1 - dist / 90;
-              // gelombang halus berjalan
-              glow *= 0.72 + 0.28 * Math.sin(t * 6 + dist * 0.08);
+              glow = (1 - dist / 90) * (0.72 + 0.28 * Math.sin(t * 6 + dist * 0.08));
             }
           }
           if (glow > 0.08) {
@@ -83,20 +79,47 @@ function DitherBand() {
           }
         }
       }
-      raf = requestAnimationFrame(draw);
+    };
+
+    // Loop hanya jalan saat hover + terlihat. Idle = 0 biaya CPU.
+    const loop = () => {
+      t += 0.016;
+      paint(true);
+      raf = requestAnimationFrame(loop);
+    };
+    const start = () => {
+      if (raf || reduce) return;
+      raf = requestAnimationFrame(loop);
+    };
+    const stop = () => {
+      if (raf) cancelAnimationFrame(raf);
+      raf = 0;
+      paint(false);
     };
 
     const onMove = (e: PointerEvent) => {
       mouse.current = { x: e.clientX, y: e.clientY };
-      const rect = cv.getBoundingClientRect();
-      offTop = window.scrollY - (window.scrollY - rect.top); // rect.top sudah viewport-relative
     };
     const parent = cv.parentElement as HTMLElement;
     parent.addEventListener('pointermove', onMove);
 
-    raf = requestAnimationFrame(draw);
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting;
+      if (!visible) stop();
+      else if (!hover) paint(false);
+    }, { threshold: 0.01 });
+    io.observe(cv);
+
+    if (hover && visible) start();
+    else paint(false);
+
+    const onResize = () => paint(false);
+    window.addEventListener('resize', onResize);
+
     return () => {
-      cancelAnimationFrame(raf);
+      if (raf) cancelAnimationFrame(raf);
+      io.disconnect();
+      window.removeEventListener('resize', onResize);
       parent.removeEventListener('pointermove', onMove);
     };
   }, [hover]);
@@ -156,12 +179,12 @@ export function ArtStripSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="relative h-[320px] sm:h-[380px] overflow-hidden">
+            <div className="relative aspect-[4/3] overflow-hidden">
               <img
                 src={art.src}
                 alt={art.label}
                 loading="lazy"
-                className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-[filter,transform] duration-500 group-hover:scale-[1.03]"
+                className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-[filter,transform] duration-500 group-hover:scale-[1.03]"
               />
               {/* terminal overlay: dark base + LIVE status */}
               <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#121212]/70 via-transparent to-transparent" />

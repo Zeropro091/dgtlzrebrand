@@ -105,7 +105,7 @@ export function ServicesSection() {
                       <span className="font-label-caps text-[10px] opacity-60">
                         0{index + 1} · TIER 1
                       </span>
-                      <span className="font-mono text-[9px] px-1.5 py-0.5 border border-current opacity-40">
+                      <span className="font-mono text-[9px] px-1.5 py-0.5 border border-current opacity-70">
                         DESAIN & STRATEGI
                       </span>
                     </div>

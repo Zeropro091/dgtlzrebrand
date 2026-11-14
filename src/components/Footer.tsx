@@ -9,11 +9,11 @@ export function Footer() {
       <div className="flex flex-col md:flex-row gap-8 items-center font-body-sm uppercase tracking-widest">
         <a onMouseEnter={() => play('hover')}
           onClick={() => play('nav')}
-          className="opacity-70 hover:opacity-100 transition-opacity draw-underline" href="/systems">SYSTEMS</a>
-        <a className="opacity-70 hover:opacity-100 transition-opacity" href="#">TERMS</a>
-        <a className="opacity-70 hover:opacity-100 transition-opacity" href="#">SHIPPING</a>
-        <a className="opacity-70 hover:opacity-100 transition-opacity" href="https://wa.me/6281237729115" target="_blank" rel="noopener noreferrer">CONTACT</a>
-        <a className="opacity-70 hover:opacity-100 transition-opacity" href="https://www.instagram.com/dgt_lz/" target="_blank" rel="noopener noreferrer">DGT INSTAGRAM</a>
+          className="inline-flex items-center min-h-[24px] opacity-70 hover:opacity-100 transition-opacity draw-underline" href="/systems">SYSTEMS</a>
+        <a className="inline-flex items-center min-h-[24px] opacity-70 hover:opacity-100 transition-opacity" href="/systems#faq">TERMS</a>
+        <a className="inline-flex items-center min-h-[24px] opacity-70 hover:opacity-100 transition-opacity" href="/agent#faq">SHIPPING</a>
+        <a className="inline-flex items-center min-h-[24px] opacity-70 hover:opacity-100 transition-opacity" href="https://wa.me/6281237729115" target="_blank" rel="noopener noreferrer">CONTACT</a>
+        <a className="inline-flex items-center min-h-[24px] opacity-70 hover:opacity-100 transition-opacity" href="https://www.instagram.com/dgt_lz/" target="_blank" rel="noopener noreferrer">DGT INSTAGRAM</a>
         <a className="opacity-70 hover:opacity-100 transition-opacity" href="https://www.instagram.com/madzilla3dprint.bali/" target="_blank" rel="noopener noreferrer">MADZILLA INSTAGRAM</a>
         <a className="opacity-70 hover:opacity-100 transition-opacity" href="/login">DECK LOGIN</a>
       </div>
