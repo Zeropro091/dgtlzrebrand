@@ -71,8 +71,16 @@ function DitherBand() {
             }
           }
           if (glow > 0.08) {
+            // Monokrom: piksel di sekitar kursor cuma digeser ke putih/abu,
+            // bukan warna neon. Tetap konsisten sama tema hitam-putih.
             const g = Math.min(1, glow);
-            ctx.fillStyle = `rgb(${Math.round(57 + (18 - 57) * (1 - g))},${Math.round(255 - (255 - 18) * (1 - g))},${Math.round(20 - 20 * (1 - g))})`;
+            if (on) {
+              const v = Math.round(18 + 237 * g);
+              ctx.fillStyle = `rgb(${v},${v},${v})`;
+            } else {
+              const v = Math.round(255 - 46 * g);
+              ctx.fillStyle = `rgb(${v},${v},${v})`;
+            }
             ctx.fillRect(cx * PX, ry * PX, PX, PX);
           } else if (on) {
             ctx.fillStyle = '#121212';
