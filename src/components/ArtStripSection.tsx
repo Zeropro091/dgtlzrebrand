@@ -173,13 +173,13 @@ export function ArtStripSection() {
   const reduceMotion = useReducedMotion();
 
   return (
-    <section id="art-strip" className="border-b border-[#39FF14]/30 bg-[#121212] text-white">
+    <section id="art-strip" className="border-b border-white/15 bg-[#121212] text-white">
       {/* Pixel dissolve band — putih "bocor" jadi gradasi smooth; cursor meng-geterkan piksel */}
       <DitherBand />
 
       {/* Header bar — mirrors AgentSection header pattern */}
-      <div className="p-margin border-b border-[#39FF14]/30 flex items-end justify-between gap-4">
-        <span className="font-label-caps block text-[#39FF14]">ARSIP VISUAL</span>
+      <div className="p-margin border-b border-white/15 flex items-end justify-between gap-4">
+        <span className="font-label-caps block text-white">ARSIP VISUAL</span>
         <span className="font-mono text-[11px] opacity-70 tracking-widest">
           03 ARTIFACTS · DEPLOYED
         </span>
@@ -189,8 +189,8 @@ export function ArtStripSection() {
         {artworks.map((art, i) => (
           <motion.figure
             key={art.src}
-            className={`relative overflow-hidden group hover:bg-[#39FF14]/5 transition-colors duration-300 ${
-              i < artworks.length - 1 ? 'border-b md:border-b-0 md:border-r border-[#39FF14]/20' : ''
+            className={`relative overflow-hidden group hover:bg-white/5 transition-colors duration-300 ${
+              i < artworks.length - 1 ? 'border-b md:border-b-0 md:border-r border-white/15' : ''
             }`}
             initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -206,13 +206,13 @@ export function ArtStripSection() {
               />
               {/* terminal overlay: dark base + LIVE status */}
               <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-[#121212]/70 via-transparent to-transparent" />
-              <span className="absolute top-3 right-3 flex items-center gap-2 font-mono text-[10px] text-[#39FF14] tracking-widest opacity-90">
-                <span className="w-2 h-2 rounded-full bg-[#39FF14] animate-pulse" />
+              <span className="absolute top-3 right-3 flex items-center gap-2 font-mono text-[10px] text-white tracking-widest opacity-90">
+                <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
                 LIVE
               </span>
             </div>
-            <figcaption className="border-t border-[#39FF14]/20 px-4 py-3 flex flex-col gap-1">
-              <span className="font-mono text-[11px] font-bold text-[#39FF14] tracking-widest group-hover:text-white transition-colors">
+            <figcaption className="border-t border-white/15 px-4 py-3 flex flex-col gap-1">
+              <span className="font-mono text-[11px] font-bold text-white tracking-widest">
                 ▸ {String(i + 1).padStart(2, '0')} — {art.label}
               </span>
               <span className="font-mono text-[10px] opacity-70 tracking-wider">
@@ -223,13 +223,13 @@ export function ArtStripSection() {
         ))}
       </div>
 
-      <div className="border-t border-[#39FF14]/30 p-margin flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="border-t border-white/15 p-margin flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <span className="font-mono text-[11px] opacity-70 tracking-widest">
           VISUAL SYSTEM: THE AGENT · THE OPERATOR · THE SHADE
         </span>
         <a
           href="#agent"
-          className="font-label-caps bg-[#39FF14] text-[#121212] px-6 py-3 text-center hover:bg-white transition-colors"
+          className="font-label-caps bg-white text-[#121212] px-6 py-3 text-center hover:bg-[#121212] hover:text-white border border-white transition-colors"
         >
           LIHAT AGENT →
         </a>
