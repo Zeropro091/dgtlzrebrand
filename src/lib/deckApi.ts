@@ -53,7 +53,9 @@ async function api<T>(path: string, { method = 'GET', body }: ApiOptions = {}): 
   });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) {
-    if (res.status === 404) markMissing(path);
+    // 404 & 5xx = endpoint tidak ada / rusak di backend ini → jangan diulang.
+    // 401/403/422 tetap dilempar agar bug auth tidak disembunyikan.
+    if (res.status === 404 || res.status >= 500) markMissing(path);
     throw new Error((data as { error?: string }).error || `HTTP ${res.status}`);
   }
   return data as T;
