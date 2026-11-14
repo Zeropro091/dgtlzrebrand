@@ -390,7 +390,7 @@ function ScrollProgress() {
   return (
     <motion.div
       aria-hidden="true"
-      className="absolute bottom-0 left-0 h-[2px] w-full origin-left bg-[#39FF14] z-[60]"
+      className="absolute bottom-0 left-0 h-[2px] w-full origin-left bg-white/80 z-[60]"
       style={{ scaleX }}
     />
   );
