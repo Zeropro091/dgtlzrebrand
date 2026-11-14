@@ -1,7 +1,121 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 
 // Art strip — theme matches AI AGENT UNTUK BISNIS (AgentSection):
 // dark #121212 canvas, terminal-green #39FF14 accents, mono labels.
+
+// Pixel canvas: putih → #121212 dissolve pakai per-pixel dither (Bayer 4x4),
+// piksel dekat cursor "menyala" hijau terminal. Canvas = satu elemen, murah.
+const PX = 4; // ukuran piksel
+const BAYER = [
+  [15, 8, 11, 2],
+  [3, 13, 6, 9],
+  [10, 5, 14, 7],
+  [1, 4, 12, 0],
+];
+
+function DitherBand() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const mouse = useRef<{ x: number; y: number } | null>(null);
+  const [hover, setHover] = useState(false);
+
+  useEffect(() => {
+    const cv = canvasRef.current;
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    if (!ctx) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let raf = 0;
+    let t = 0;
+    let cols = 0;
+    let rows = 0;
+    let offTop = 0;
+
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    const draw = () => {
+      const rect = cv.getBoundingClientRect();
+      const w = Math.max(1, Math.floor(rect.width));
+      const H = Math.max(1, Math.floor(rect.height));
+      if (cv.width !== w * dpr || cv.height !== H * dpr) {
+        cv.width = w * dpr;
+        cv.height = H * dpr;
+        cols = Math.ceil(w / PX);
+        rows = Math.ceil(H / PX);
+      }
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, w, H);
+      t += reduce ? 0 : 0.016;
+
+      const m = mouse.current;
+      // koordinat mouse relatif canvas
+      const mx = m ? m.x - rect.left : -1e4;
+      const my = m ? m.y - rect.top + offTop : -1e4;
+
+      for (let ry = 0; ry < rows; ry++) {
+        // progress vertikal 0 (atas, putih) → 1 (bawah, gelap), smoothstep
+        const p = ry / Math.max(1, rows - 1);
+        const eased = p * p * (3 - 2 * p);
+        for (let cx = 0; cx < cols; cx++) {
+          const b = BAYER[ry & 3][cx & 3] / 16;
+          const on = eased > b;
+          // interaksi cursor: radius 90px dari kursor
+          let glow = 0;
+          if (hover && m) {
+            const dx = cx * PX + PX / 2 - mx;
+            const dy = ry * PX + PX / 2 - my;
+            const dist = Math.hypot(dx, dy);
+            if (dist < 90) {
+              glow = 1 - dist / 90;
+              // gelombang halus berjalan
+              glow *= 0.72 + 0.28 * Math.sin(t * 6 + dist * 0.08);
+            }
+          }
+          if (glow > 0.08) {
+            const g = Math.min(1, glow);
+            ctx.fillStyle = `rgb(${Math.round(57 + (18 - 57) * (1 - g))},${Math.round(255 - (255 - 18) * (1 - g))},${Math.round(20 - 20 * (1 - g))})`;
+            ctx.fillRect(cx * PX, ry * PX, PX, PX);
+          } else if (on) {
+            ctx.fillStyle = '#121212';
+            ctx.fillRect(cx * PX, ry * PX, PX, PX);
+          }
+        }
+      }
+      raf = requestAnimationFrame(draw);
+    };
+
+    const onMove = (e: PointerEvent) => {
+      mouse.current = { x: e.clientX, y: e.clientY };
+      const rect = cv.getBoundingClientRect();
+      offTop = window.scrollY - (window.scrollY - rect.top); // rect.top sudah viewport-relative
+    };
+    const parent = cv.parentElement as HTMLElement;
+    parent.addEventListener('pointermove', onMove);
+
+    raf = requestAnimationFrame(draw);
+    return () => {
+      cancelAnimationFrame(raf);
+      parent.removeEventListener('pointermove', onMove);
+    };
+  }, [hover]);
+
+  return (
+    <div
+      aria-hidden="true"
+      className="relative w-full h-[128px] overflow-hidden cursor-crosshair"
+      onPointerEnter={() => setHover(true)}
+      onPointerLeave={() => {
+        setHover(false);
+        mouse.current = null;
+      }}
+    >
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full" />
+    </div>
+  );
+}
+
 type Art = {
   src: string;
   label: string;
@@ -19,25 +133,8 @@ export function ArtStripSection() {
 
   return (
     <section id="art-strip" className="border-b border-[#39FF14]/30 bg-[#121212] text-white">
-      {/* Pixel dissolve band — putih dari CARA KERJA "bocor" halus jadi piksel ke arsip gelap */}
-      <div aria-hidden="true" className="w-full overflow-hidden">
-        {Array.from({ length: 14 }, (_, i) => i / 13).map((d, i) => (
-          <div
-            key={i}
-            className="w-full"
-            style={{
-              height: d >= 1 ? 8 : 8,
-              backgroundColor: '#ffffff',
-              backgroundImage:
-                d >= 1
-                  ? 'linear-gradient(#121212, #121212)'
-                  : `conic-gradient(rgba(18,18,18,${d}) 0 25%, transparent 25% 50%, rgba(18,18,18,${d}) 50% 75%, transparent 75% 100%), conic-gradient(rgba(18,18,18,${d * 0.5}) 0 25%, transparent 25% 50%, transparent 50% 75%, rgba(18,18,18,${d * 0.5}) 75% 100%)`,
-              backgroundSize: d >= 1 ? 'auto' : '6px 6px, 12px 12px',
-              backgroundPosition: i % 2 ? '3px 0, 0 0' : '0 0, 6px 0',
-            }}
-          />
-        ))}
-      </div>
+      {/* Pixel dissolve band — putih "bocor" jadi gradasi smooth; cursor meng-geterkan piksel */}
+      <DitherBand />
 
       {/* Header bar — mirrors AgentSection header pattern */}
       <div className="p-margin border-b border-[#39FF14]/30 flex items-end justify-between gap-4">
