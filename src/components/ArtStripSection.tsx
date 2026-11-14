@@ -41,9 +41,10 @@ function DitherBand() {
       if (cv.width !== w * dpr || cv.height !== H * dpr) {
         cv.width = w * dpr;
         cv.height = H * dpr;
-        cols = Math.ceil(w / PX);
-        rows = Math.ceil(H / PX);
       }
+      // selalu hitung ulang grid — jangan bergantung pada perubahan ukuran canvas
+      cols = Math.ceil(w / PX);
+      rows = Math.ceil(H / PX);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       ctx.fillStyle = '#ffffff';
       ctx.fillRect(0, 0, w, H);
