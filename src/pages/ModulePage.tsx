@@ -53,7 +53,7 @@ export function ModulePage() {
       <header className="relative border-b border-electric-blue overflow-hidden bg-[#121212]">
         {/* Layer 0 — statue photograph */}
         <img
-          src="/statue.png"
+          src="/statue.webp"
           alt="Classical marble statue — module insignia"
           className="absolute inset-0 w-full h-full object-cover object-[50%_20%] grayscale contrast-125 opacity-90"
         />

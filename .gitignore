@@ -11,3 +11,11 @@ coverage/
 # runtime secrets & data (jangan pernah public)
 server/data/
 server.log
+
+# scratch / workbench images (bukan aset produksi)
+public/test_on_white.png
+public/test_on_offwhite.png
+public/hero_screenshot_preview.png
+public/pdf_page_1.png
+public/extracted_pdf_image.png
+public/extracted_mask.png

@@ -8,6 +8,13 @@ import { Tilt3D } from './Magnetic';
 export function WorkSection() {
   const [selectedWork, setSelectedWork] = useState<WorkItem | null>(null);
   const [activeImageIndex, setActiveImageIndex] = useState<number>(0);
+  const [collapsed, setCollapsed] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('dgt:work-collapsed') === '1';
+    } catch {
+      return false;
+    }
+  });
   const { play } = useSound();
 
   const openCase = (item: WorkItem) => {
@@ -57,9 +64,35 @@ export function WorkSection() {
   return (
     <>
       <section id="work" className="bg-white">
-        <div className="p-margin border-b border-electric-blue bg-electric-blue text-white">
-          <h2 className="font-display-lg leading-none uppercase">SELECTED WORK</h2>
+        <div className="flex items-center justify-between gap-4 px-margin py-6 border-b border-electric-blue bg-electric-blue text-white">
+          <h2 className="font-headline-md leading-none uppercase">SELECTED WORK</h2>
+          <button
+            type="button"
+            onClick={() => {
+              const next = !collapsed;
+              setCollapsed(next);
+              play(next ? 'close' : 'open');
+              try {
+                localStorage.setItem('dgt:work-collapsed', next ? '1' : '0');
+              } catch {
+                /* private mode */
+              }
+            }}
+            aria-expanded={!collapsed}
+            aria-controls="work-grid"
+            className="font-label-caps shrink-0 border border-white/70 px-4 py-2 hover:bg-white hover:text-electric-blue transition-colors duration-200"
+          >
+            {collapsed ? '[ SHOW ]' : '[ MINIMIZE ]'}
+          </button>
         </div>
+        <motion.div
+          id="work-grid"
+          initial={false}
+          animate={{ height: collapsed ? 0 : 'auto', opacity: collapsed ? 0 : 1 }}
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          style={{ overflow: 'hidden' }}
+          aria-hidden={collapsed}
+        >
         <div className="grid grid-cols-1 md:grid-cols-12 items-start">
           {workItems.map((item, index) => (
             <div
@@ -81,7 +114,7 @@ export function WorkSection() {
                 className="tilt-shine flex flex-col cursor-pointer h-full focus-machine"
               >
                 <Tilt3D maxTilt={3} className="flex flex-col">
-                  <div className="dither-container w-full aspect-[4/3] md:aspect-[16/10] overflow-hidden border-b border-electric-blue relative">
+                  <div className={`dither-container w-full ${item.span.includes('col-span-12') ? 'aspect-[16/9] md:aspect-[3/1]' : 'aspect-[4/3] md:aspect-[16/10]'} overflow-hidden border-b border-electric-blue relative`}>
                     {item.videoUrl ? (
                       <video
                         src={item.videoUrl}
@@ -102,23 +135,24 @@ export function WorkSection() {
                     )}
                     <div className="absolute inset-0 dither-pattern opacity-20 pointer-events-none"></div>
                     <div className="absolute inset-0 flex items-center justify-center bg-electric-blue/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 backdrop-blur-sm">
-                      <p className="font-label-caps text-center text-[#39FF14] text-sm sm:text-lg px-6 py-3 border border-[#39FF14] mx-4 max-w-[90%] md:max-w-sm translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                      <p className="font-label-caps text-center text-[#39FF14] text-xs sm:text-sm px-4 py-2 border border-[#39FF14] mx-4 max-w-[90%] md:max-w-sm translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                         [ KLIK UNTUK BACA CASE STUDY ]
                       </p>
                     </div>
                   </div>
                 </Tilt3D>
-                <div className="p-margin bg-white group-hover:bg-electric-blue group-hover:text-white transition-colors duration-300">
-                  <div className="flex justify-between items-start mb-4">
+                <div className="px-margin py-4 bg-white group-hover:bg-electric-blue group-hover:text-white transition-colors duration-300">
+                  <div className="flex justify-between items-start mb-2">
                     <span className="font-label-caps opacity-60">KLIEN · {item.client}</span>
                     <span className="font-label-caps opacity-60">{item.status ?? item.category}</span>
                   </div>
-                  <h3 className="font-headline-md uppercase">{item.title}</h3>
+                  <h3 className="font-headline-md uppercase text-lg md:text-xl leading-tight">{item.title}</h3>
                 </div>
               </div>
             </div>
           ))}
         </div>
+        </motion.div>
       </section>
 
       {/* Lightbox Modal */}

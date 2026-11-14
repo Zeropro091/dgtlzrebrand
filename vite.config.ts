@@ -12,6 +12,9 @@ export default defineConfig(() => {
       },
     },
     server: {
+      // Bind all interfaces so the site is reachable from other devices on the
+      // LAN and over Tailscale, not just from this machine.
+      host: true,
       proxy: {
         '/api': {
           target: 'http://localhost:4000',
@@ -43,6 +46,11 @@ export default defineConfig(() => {
             '.ngrok.app',
             '.ngrok.io',
             '.ngrok.com',
+            // Cloudflare quick tunnels (cloudflared --url)
+            '.trycloudflare.com',
+            // Local network + Tailscale access from phones/tablets
+            '192.168.93.177',
+            '100.119.128.12',
           ],
         },
   };
