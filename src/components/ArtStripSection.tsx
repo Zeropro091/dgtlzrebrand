@@ -19,20 +19,21 @@ export function ArtStripSection() {
 
   return (
     <section id="art-strip" className="border-b border-[#39FF14]/30 bg-[#121212] text-white">
-      {/* Pixel dissolve band — putih dari CARA KERJA "bocor" jadi piksel ke arsip gelap */}
+      {/* Pixel dissolve band — putih dari CARA KERJA "bocor" halus jadi piksel ke arsip gelap */}
       <div aria-hidden="true" className="w-full overflow-hidden">
-        {[0.25, 0.5, 0.75, 1].map((d, i) => (
+        {Array.from({ length: 14 }, (_, i) => i / 13).map((d, i) => (
           <div
             key={i}
-            className="h-6 w-full"
+            className="w-full"
             style={{
+              height: d >= 1 ? 8 : 8,
               backgroundColor: '#ffffff',
               backgroundImage:
                 d >= 1
                   ? 'linear-gradient(#121212, #121212)'
-                  : `conic-gradient(rgba(18,18,18,${d}) 0 25%, transparent 25% 50%, rgba(18,18,18,${d}) 50% 75%, transparent 75% 100%)`,
-              backgroundSize: d >= 1 ? 'auto' : '12px 12px',
-              backgroundPosition: i % 2 ? '6px 0' : '0 0',
+                  : `conic-gradient(rgba(18,18,18,${d}) 0 25%, transparent 25% 50%, rgba(18,18,18,${d}) 50% 75%, transparent 75% 100%), conic-gradient(rgba(18,18,18,${d * 0.5}) 0 25%, transparent 25% 50%, transparent 50% 75%, rgba(18,18,18,${d * 0.5}) 75% 100%)`,
+              backgroundSize: d >= 1 ? 'auto' : '6px 6px, 12px 12px',
+              backgroundPosition: i % 2 ? '3px 0, 0 0' : '0 0, 6px 0',
             }}
           />
         ))}
