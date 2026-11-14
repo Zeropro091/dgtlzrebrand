@@ -69,7 +69,7 @@ export function WorkflowSection() {
       <div className="relative col-span-12 md:col-span-7 lg:col-span-8 flex flex-col justify-between bg-white overflow-hidden">
         
         {/* Japanese Sumi-e Pine Tree on Cliff Artwork */}
-        <div className="absolute bottom-0 right-0 pointer-events-none select-none z-0 w-[48%] max-w-[350px] md:max-w-[430px] h-[78%] md:h-[92%] overflow-hidden flex items-end justify-end">
+        <div style={{ transform: 'scaleX(-1)' }} className="absolute bottom-0 right-0 pointer-events-none select-none z-0 w-[48%] max-w-[350px] md:max-w-[430px] h-[78%] md:h-[92%] overflow-hidden flex items-end justify-end">
           <motion.img
             src="/tree-cliff.webp"
             alt="Japanese pine tree on cliff"
